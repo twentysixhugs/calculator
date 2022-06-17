@@ -9,4 +9,10 @@ module.exports = {
     clean: true,
   },
   plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js'],
+  },
+  module: {
+    rules: [{ test: /\.css$/, use: ['style-loader', 'css-loader'] }],
+  },
 };
