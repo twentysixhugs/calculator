@@ -1,14 +1,21 @@
 body,
 .root {
+  --main-background: #fff;
   min-height: 100vh;
   background: #f9c2d2;
+
+  @media (max-device-height: 400px) and (orientation: landscape),
+    (max-width: 350px) {
+    --main-background: #fff;
+    background: var(--main-background);
+  }
 }
 
 .root {
   display: flex;
   justify-content: center;
 
-  @media (max-device-width: 1000px) {
+  @media (max-width: 1000px) {
     align-items: center;
   }
 }
@@ -16,7 +23,6 @@ body,
 .phone {
   --highlight-background: #f7d6df;
   --highlight-text: #ff3b74;
-  --main-background: #fff;
 
   --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
