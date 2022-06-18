@@ -3,12 +3,6 @@ body,
   --main-background: #fff;
   min-height: 100vh;
   background: #f9c2d2;
-
-  @media (max-device-height: 400px) and (orientation: landscape),
-    (max-width: 350px) {
-    --main-background: #fff;
-    background: var(--main-background);
-  }
 }
 
 .root {
@@ -190,6 +184,8 @@ body,
   justify-content: flex-end;
   align-items: flex-end;
 
+  align-self: center;
+
   width: 100%;
   min-height: 100px;
   max-width: calc(var(--middle-gap) * 4 + 1rem * 3 + var(--padding) * 2 - 2px);
@@ -210,6 +206,10 @@ body,
   @media (max-device-width: 1000px) and (orientation: landscape) {
     min-height: 50px;
     max-width: unset;
+  }
+
+  @media (max-width: 500px) {
+    padding-bottom: calc(var(--padding) * 1);
   }
 }
 
