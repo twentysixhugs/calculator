@@ -42,6 +42,7 @@ body,
   padding: calc(var(--padding) * 1.2) calc(var(--padding) * 1.6);
 
   background: var(--main-background);
+  border: 2px solid rgb(238, 238, 238);
   border-radius: 16px;
 
   box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 27px,
