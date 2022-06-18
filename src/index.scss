@@ -33,7 +33,7 @@ body,
 
   margin-top: 40px;
   max-width: 250px;
-  padding: calc(var(--padding) * 2) calc(var(--padding) * 1.3);
+  padding: calc(var(--padding) * 2) calc(var(--padding) * 1.6);
 
   background: var(--main-background);
   border-radius: 16px;
@@ -41,6 +41,28 @@ body,
   &__multimedia {
     display: flex;
     gap: 8px;
+  }
+
+  &__top-bar {
+    display: flex;
+    align-items: center;
+  }
+
+  &__top-bar .icon {
+    width: 13px;
+    height: 13px;
+    margin-left: 5px;
+
+    transform: scaleX(1.1);
+  }
+
+  &__top-bar .icon:nth-child(2) {
+    margin-top: 1.5px;
+  }
+
+  &__time {
+    margin-right: auto;
+    font-size: 13px;
   }
 
   @media (max-device-width: 1000px) and (orientation: landscape) {
