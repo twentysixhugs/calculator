@@ -283,6 +283,8 @@ body,
   &--middle {
     $gap: 1rem;
 
+    position: relative;
+
     @include buttons-flex-centered(column, 1rem, var(--middle-gap));
     @include outer-wrapper($gap, column);
     @include inner-wrapper($gap);
@@ -317,6 +319,18 @@ body,
     @media (max-width: 350px) {
       @include outer-wrapper(1.475rem, column);
       @include inner-wrapper(1.475rem);
+    }
+
+    @media (min-width: 1000px) {
+      & .line {
+        align-self: center;
+
+        width: 110px;
+        height: 3px;
+
+        border-radius: 2px;
+        background: rgb(235, 235, 235);
+      }
     }
   }
 
