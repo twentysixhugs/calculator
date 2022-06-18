@@ -262,10 +262,18 @@ body,
     background: none;
     border-radius: 50%;
 
+    &:active {
+      background: rgb(231, 231, 231);
+    }
+
     &--highlight {
       background: var(--highlight-background);
       color: #e26a8d;
       box-shadow: rgba(195, 45, 85, 0.4) 4px 5px 5px;
+
+      &:active {
+        background: #f5c3d0;
+      }
     }
 
     &--equals {
@@ -273,6 +281,10 @@ body,
       color: #fff;
       border-radius: 50%;
       box-shadow: rgba(91, 132, 176, 0.4) 4px 5px 5px;
+
+      &:active {
+        background: rgb(59, 116, 177);
+      }
     }
   }
 }
