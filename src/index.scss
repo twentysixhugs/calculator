@@ -39,7 +39,7 @@ body,
 
   margin-top: 40px;
   max-width: 250px;
-  padding: calc(var(--padding) * 2) calc(var(--padding) * 1.6);
+  padding: calc(var(--padding) * 1.2) calc(var(--padding) * 1.6);
 
   background: var(--main-background);
   border-radius: 16px;
@@ -69,6 +69,31 @@ body,
   &__time {
     margin-right: auto;
     font-size: 13px;
+  }
+
+  &__multimedia {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+
+    padding-bottom: calc(var(--padding) * 0.8);
+  }
+
+  &__speaker {
+    width: 40px;
+    height: 7px;
+    border-radius: 12px;
+    background: #f1f1f1;
+  }
+
+  &__camera {
+    width: 6px;
+    height: 6px;
+
+    background: #b4cad4;
+    border: 4px solid #f1f1f1;
+    border-radius: 100%;
   }
 
   @media (max-device-width: 1000px) and (orientation: landscape) {
