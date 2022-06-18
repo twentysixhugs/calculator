@@ -1,6 +1,7 @@
 body,
 .root {
   min-height: 100vh;
+  background: #f9c2d2;
 }
 
 .root {
@@ -15,19 +16,27 @@ body,
 .phone {
   --highlight-background: #f7d6df;
   --highlight-text: #ff3b74;
+  --main-background: #fff;
 
   --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
   --font: 17px "Poppins", var(--system-font);
 
+  --padding: 1.3rem;
+  --middle-gap: 2.5rem;
+
   display: flex;
   flex-flow: column;
+  height: max-content;
   font: var(--font);
 
   margin-top: 40px;
-
   max-width: 250px;
+  padding: calc(var(--padding) * 2) calc(var(--padding) * 1.3);
+
+  background: var(--main-background);
+  border-radius: 16px;
 
   &__multimedia {
     display: flex;
@@ -36,6 +45,7 @@ body,
 
   @media (max-device-width: 1000px) and (orientation: landscape) {
     max-width: none;
+    padding: calc(var(--padding) * 1.2) calc(var(--padding) * 2);
   }
 
   @media (max-device-width: 1000px) {
@@ -52,17 +62,20 @@ body,
 .display {
   width: 100%;
   min-height: 100px;
-  max-width: calc(2.5rem * 4 + 1rem * 3 + 2.6rem - 2px);
+  max-width: calc(var(--middle-gap) * 4 + 1rem * 3 + var(--padding) * 2 - 2px);
 
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 
-  border: 1px solid gray;
-
   &__input-output {
     width: 100%;
+    min-height: 3rem;
+
+    font-size: 2rem;
     text-align: right;
+
+    outline: none !important;
   }
 
   @media (max-device-width: 1000px) and (orientation: landscape) {
@@ -76,85 +89,88 @@ body,
   flex-flow: column;
   gap: 1rem;
 
-  padding: 1.3rem;
+  padding: var(--padding);
 
   background: #fdfafa;
+
   @media (max-device-width: 1000px) and (orientation: landscape) {
     flex-flow: row;
+    justify-content: space-around;
   }
 }
 
 .buttons {
-  $top-inner-offset: 13px;
-  $middle-inner-offset: 20px;
+  @mixin buttons-flex-centered($flex-flow, $gap, $buttonSize) {
+    display: flex;
+    flex-flow: $flex-flow;
+    justify-content: center;
+    gap: $gap;
+
+    .btn {
+      width: $buttonSize;
+      height: $buttonSize;
+    }
+  }
+
+  @mixin outer-wrapper($gap, $flex-flow: row) {
+    & > .wrapper {
+      display: flex;
+      flex-flow: $flex-flow;
+      gap: $gap;
+    }
+  }
+
+  @mixin inner-wrapper($gap, $flex-flow: row) {
+    & > .wrapper > .wrapper {
+      display: flex;
+      gap: $gap;
+      flex-flow: $flex-flow;
+    }
+  }
 
   &--top {
     /* By passing rems, we make sure it will grow
     if the user changes browser font size */
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    gap: 12px;
+    $gap: 0.75rem;
 
-    & > .wrapper {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn {
-      width: 2rem;
-      height: 2rem;
-    }
+    @include buttons-flex-centered(column, $gap, 2rem);
+    @include outer-wrapper($gap);
 
     @media (max-device-width: 1000px) and (orientation: landscape) {
-      flex-flow: row;
-      & > .wrapper {
-        flex-flow: column;
-      }
+      @include buttons-flex-centered(row, 4rem, 2rem);
+      @include outer-wrapper($gap, column);
     }
   }
 
   &--middle {
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
-    gap: 1rem;
+    $gap: 1rem;
 
-    & > .wrapper {
-      display: flex;
-      flex-flow: column;
-      gap: 1rem;
-    }
-
-    & > .wrapper > .wrapper {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .btn {
-      width: 2.5rem;
-      height: 2.5rem;
-    }
+    @include buttons-flex-centered(column, 1rem, var(--middle-gap));
+    @include outer-wrapper($gap, column);
+    @include inner-wrapper($gap);
 
     @media (max-device-width: 1000px) and (orientation: landscape) {
       flex-flow: row-reverse;
 
-      & > .wrapper > .wrapper {
-        gap: 1rem;
+      & .wrapper--landscape-margin-left {
+        $gap: 1.5rem;
+        .btn {
+          margin-left: $gap;
+        }
       }
 
       & .wrapper--powers {
-        flex-flow: column;
+        flex-flow: column !important;
       }
 
       .btn--equals {
         position: relative;
-        left: calc(2.5rem + 1rem);
+        left: calc(var(--middle-gap) + 1rem);
       }
 
       .btn--divide {
         position: relative;
-        right: calc(2.5rem + 1rem);
+        right: calc(var(--middle-gap) + 1rem);
       }
     }
   }
