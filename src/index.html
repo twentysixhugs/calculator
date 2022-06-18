@@ -13,85 +13,84 @@
 
 <body>
   <div class="root">
-    <div class="phone">
-      <div class="phone__design-btn"></div>
-      <div class="phone__design-btn"></div>
-      <div class="phone__design-btn"></div>
-      <div class="phone__design-btn"></div>
-      <div class="phone__multimedia">
-        <div class="phone__speaker"></div>
-        <div class="phone__camera"></div>
-      </div>
-      <div class="phone__top-bar">
-        <span class="phone__time">9:41</span>
-        <svg class="icon" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M1,21H21V1" />
-        </svg>
-        <svg class="icon" viewBox="0 0 24 24">
-          <path fill="currentColor"
-            d="M12,21L15.6,16.2C14.6,15.45 13.35,15 12,15C10.65,15 9.4,15.45 8.4,16.2L12,21M12,3C7.95,3 4.21,4.34 1.2,6.6L3,9C5.5,7.12 8.62,6 12,6C15.38,6 18.5,7.12 21,9L22.8,6.6C19.79,4.34 16.05,3 12,3M12,9C9.3,9 6.81,9.89 4.8,11.4L6.6,13.8C8.1,12.67 9.97,12 12,12C14.03,12 15.9,12.67 17.4,13.8L19.2,11.4C17.19,9.89 14.7,9 12,9Z" />
-        </svg>
-        <svg class="icon" viewBox="0 0 24 24">
-          <path fill="currentColor"
-            d="M16,8H8V6H16M16.67,4H15V2H9V4H7.33A1.33,1.33 0 0,0 6,5.33V20.67C6,21.4 6.6,22 7.33,22H16.67A1.33,1.33 0 0,0 18,20.67V5.33C18,4.6 17.4,4 16.67,4Z" />
-        </svg>
-
-      </div>
-      <div class="display js-display">
-        <input autofocus class="display__input-output js-input-output" value="24.53" />
-      </div>
-      <div class="wrapper wrapper--buttons">
-        <div class="buttons buttons--top">
-
-          <div class="wrapper">
-            <button class="btn" id="10-power-x">10<sup>x</sup></button>
-            <button class="btn" id="square-root"><sup>2</sup>&#8730;x</button>
-            <button class="btn" id="cubiroot"><sup>3</sup>&#8730;x</button>
-            <button class="btn" id="mc">MC</button>
-            <button class="btn" id="m-plus">M+</button>
-          </div>
-          <div class="wrapper">
-            <button class="btn" id="1-divided-by-x">1/x</button>
-            <button class="btn" id="y-root"><sup>y</sup>&#8730;x</button>
-            <button class="btn" id="factorial">x!</button>
-            <button class="btn" id="mr">MR</button>
-            <button class="btn" id="m-minus">M&#8722;</button>
-          </div>
-
+    <div class="phone-container">
+      <div class="design-btn design-btn--1"></div>
+      <div class="design-btn design-btn--2"></div>
+      <div class="design-btn design-btn--3"></div>
+      <div class="design-btn design-btn--4"></div>
+      <div class="phone">
+        <div class="phone__multimedia">
+          <div class="phone__speaker"></div>
+          <div class="phone__camera"></div>
         </div>
-        <div class="buttons buttons--middle">
-          <div class="wrapper">
-            <div class="wrapper wrapper--powers">
-              <button class="btn btn--highlight" id="x-power-2">x<sup>2</sup></button>
-              <button class="btn btn--highlight" id="x-power-3">x<sup>3</sup></button>
-              <button class="btn btn--highlight" id="x-power-y">x<sup>y</sup></button>
-              <button class="btn btn--highlight btn--divide js-operation" id="divide">/</button>
+        <div class="phone__top-bar">
+          <span class="phone__time">9:41</span>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M1,21H21V1" />
+          </svg>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M12,21L15.6,16.2C14.6,15.45 13.35,15 12,15C10.65,15 9.4,15.45 8.4,16.2L12,21M12,3C7.95,3 4.21,4.34 1.2,6.6L3,9C5.5,7.12 8.62,6 12,6C15.38,6 18.5,7.12 21,9L22.8,6.6C19.79,4.34 16.05,3 12,3M12,9C9.3,9 6.81,9.89 4.8,11.4L6.6,13.8C8.1,12.67 9.97,12 12,12C14.03,12 15.9,12.67 17.4,13.8L19.2,11.4C17.19,9.89 14.7,9 12,9Z" />
+          </svg>
+          <svg class="icon" viewBox="0 0 24 24">
+            <path fill="currentColor"
+              d="M16,8H8V6H16M16.67,4H15V2H9V4H7.33A1.33,1.33 0 0,0 6,5.33V20.67C6,21.4 6.6,22 7.33,22H16.67A1.33,1.33 0 0,0 18,20.67V5.33C18,4.6 17.4,4 16.67,4Z" />
+          </svg>
+        </div>
+        <div class="display js-display">
+          <input autofocus class="display__input-output js-input-output" value="24.53" />
+        </div>
+        <div class="wrapper wrapper--buttons">
+          <div class="buttons buttons--top">
+            <div class="wrapper">
+              <button class="btn" id="10-power-x">10<sup>x</sup></button>
+              <button class="btn" id="square-root"><sup>2</sup>&#8730;x</button>
+              <button class="btn" id="cubiroot"><sup>3</sup>&#8730;x</button>
+              <button class="btn" id="mc">MC</button>
+              <button class="btn" id="m-plus">M+</button>
+            </div>
+            <div class="wrapper">
+              <button class="btn" id="1-divided-by-x">1/x</button>
+              <button class="btn" id="y-root"><sup>y</sup>&#8730;x</button>
+              <button class="btn" id="factorial">x!</button>
+              <button class="btn" id="mr">MR</button>
+              <button class="btn" id="m-minus">M&#8722;</button>
             </div>
           </div>
-          <div class="wrapper wrapper--landscape-margin-left">
+          <div class="buttons buttons--middle">
             <div class="wrapper">
-              <button class="btn js-number" id="7">7</button>
-              <button class="btn js-number" id="8">8</button>
-              <button class="btn js-number" id="9">9</button>
-              <button class="btn btn--highlight js-operation" id="multiply">&times;</button>
+              <div class="wrapper wrapper--powers">
+                <button class="btn btn--highlight" id="x-power-2">x<sup>2</sup></button>
+                <button class="btn btn--highlight" id="x-power-3">x<sup>3</sup></button>
+                <button class="btn btn--highlight" id="x-power-y">x<sup>y</sup></button>
+                <button class="btn btn--highlight btn--divide js-operation" id="divide">/</button>
+              </div>
             </div>
-            <div class="wrapper">
-              <button class="btn js-number" id="4">4</button>
-              <button class="btn js-number" id="5">5</button>
-              <button class="btn js-number" id="6">6</button>
-              <button class="btn btn--highlight js-operation" id="subtract">&#8722;</button>
-            </div>
-            <div class="wrapper">
-              <button class="btn js-number" id="1">1</button>
-              <button class="btn js-number" id="2">2</button>
-              <button class="btn js-number" id="3">3</button>
-              <button class="btn btn--highlight js-operation" id="add">&plus;</button>
-            </div>
-            <div class="wrapper">
-              <button class="btn js-number" id="0">0</button>
-              <button class="btn">.</button>
-              <button class="btn">%</button>
-              <button class="btn btn--equals js-operation" id="equals">=</button>
+            <div class="wrapper wrapper--landscape-margin-left">
+              <div class="wrapper">
+                <button class="btn js-number" id="7">7</button>
+                <button class="btn js-number" id="8">8</button>
+                <button class="btn js-number" id="9">9</button>
+                <button class="btn btn--highlight js-operation" id="multiply">&times;</button>
+              </div>
+              <div class="wrapper">
+                <button class="btn js-number" id="4">4</button>
+                <button class="btn js-number" id="5">5</button>
+                <button class="btn js-number" id="6">6</button>
+                <button class="btn btn--highlight js-operation" id="subtract">&#8722;</button>
+              </div>
+              <div class="wrapper">
+                <button class="btn js-number" id="1">1</button>
+                <button class="btn js-number" id="2">2</button>
+                <button class="btn js-number" id="3">3</button>
+                <button class="btn btn--highlight js-operation" id="add">&plus;</button>
+              </div>
+              <div class="wrapper">
+                <button class="btn js-number" id="0">0</button>
+                <button class="btn">.</button>
+                <button class="btn">%</button>
+                <button class="btn btn--equals js-operation" id="equals">=</button>
+              </div>
             </div>
           </div>
         </div>
