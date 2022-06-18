@@ -5,11 +5,90 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
   <title>Calculator</title>
 </head>
 
 <body>
+  <div class="root">
+    <div class="phone">
+      <div class="phone__design-btn"></div>
+      <div class="phone__design-btn"></div>
+      <div class="phone__design-btn"></div>
+      <div class="phone__design-btn"></div>
+      <div class="phone__multimedia">
+        <div class="phone__speaker"></div>
+        <div class="phone__camera"></div>
+      </div>
+      <div class="phone__top-bar">
+        <span class="phone__time">9:41</span>
+        <img class="phone__network" alt=""></img>
+        <img class="phone__wifi" alt=""></img>
+        <img class="phone__charge" alt=""></img>
+      </div>
+      <div class="display js-display">
+        <input class="display__input-output js-input-output" value="24.53" />
+      </div>
+      <div class="wrapper wrapper--buttons">
+        <div class="buttons buttons--top">
 
+          <div class="wrapper">
+            <button class="btn" id="10-power-x">10<sup>x</sup></button>
+            <button class="btn" id="square-root"><sup>2</sup>&#8730;x</button>
+            <button class="btn" id="cubiroot"><sup>3</sup>&#8730;x</button>
+            <button class="btn" id="mc">MC</button>
+            <button class="btn" id="m-plus">M+</button>
+          </div>
+          <div class="wrapper">
+            <button class="btn" id="1-divided-by-x">1/x</button>
+            <button class="btn" id="y-root"><sup>y</sup>&#8730;x</button>
+            <button class="btn" id="factorial">x!</button>
+            <button class="btn" id="mr">MR</button>
+            <button class="btn" id="m-minus">M&#8722;</button>
+          </div>
+
+        </div>
+        <div class="buttons buttons--middle">
+          <div class="wrapper">
+            <div class="wrapper wrapper--powers">
+              <button class="btn btn--highlight" id="x-power-2">x<sup>2</sup></button>
+              <button class="btn btn--highlight" id="x-power-3">x<sup>3</sup></button>
+              <button class="btn btn--highlight" id="x-power-y">x<sup>y</sup></button>
+              <button class="btn btn--highlight btn--divide js-operation" id="divide">/</button>
+            </div>
+          </div>
+          <div class="wrapper">
+            <div class="wrapper">
+              <button class="btn js-number" id="7">7</button>
+              <button class="btn js-number" id="8">8</button>
+              <button class="btn js-number" id="9">9</button>
+              <button class="btn btn--highlight js-operation" id="multiply">&times;</button>
+            </div>
+            <div class="wrapper">
+              <button class="btn js-number" id="4">4</button>
+              <button class="btn js-number" id="5">5</button>
+              <button class="btn js-number" id="6">6</button>
+              <button class="btn btn--highlight js-operation" id="subtract">&#8722;</button>
+            </div>
+            <div class="wrapper">
+              <button class="btn js-number" id="1">1</button>
+              <button class="btn js-number" id="2">2</button>
+              <button class="btn js-number" id="3">3</button>
+              <button class="btn btn--highlight js-operation" id="add">&plus;</button>
+            </div>
+            <div class="wrapper">
+              <button class="btn js-number" id="0">0</button>
+              <button class="btn">.</button>
+              <button class="btn">%</button>
+              <button class="btn btn--equals js-operation" id="equals">=</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
