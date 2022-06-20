@@ -1,9 +1,14 @@
 import { IDisplay } from "./interfaces/Display.interface";
 
 export default class Display implements IDisplay {
-  private _display = document.querySelector<HTMLDivElement>(".js-display");
+  private _inputOutput =
+    document.querySelector<HTMLInputElement>(".js-input-output");
 
   append(value: string) {
-    this._display!.textContent += value;
+    if (this._inputOutput!.value === "0") {
+      this._inputOutput!.value = value;
+    } else {
+      this._inputOutput!.value += value;
+    }
   }
 }

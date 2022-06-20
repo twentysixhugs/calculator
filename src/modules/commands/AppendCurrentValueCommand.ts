@@ -13,12 +13,15 @@ export default class AppendCurrentValueCommand implements ICommand {
   }
 
   execute() {
-    const currentValue = this.calculator.getCurrentValue().toString();
+    // Update display
     const valueToAdd = this.arg.toString();
+    this.display.append(valueToAdd);
 
-    const concatenated = currentValue + valueToAdd;
+    // Update calculator state
+    const currentValue = this.calculator.getCurrentValue().toString();
+    const concatenated =
+      currentValue !== "0" ? currentValue + valueToAdd : valueToAdd;
 
     this.calculator.setCurrentValue(Number(concatenated));
-    this.display.append(concatenated);
   }
 }
