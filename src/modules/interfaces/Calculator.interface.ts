@@ -1,5 +1,5 @@
 export interface ICalculator {
-  getCurrentValue(): void;
+  getCurrentValue(): number;
 
   setCurrentValue(newValue: number): void;
 
