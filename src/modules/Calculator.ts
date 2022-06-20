@@ -1,54 +1,61 @@
 /* Receiver */
 
-class Calculator {
+export default class Calculator {
   private _memory = 0;
+  private _currentValue = 0;
 
-  add(a: number, b: number) {
-    return a + b;
+  getCurrentValue() {
+    return this._currentValue;
   }
 
-  subtract(a: number, b: number) {
-    return a - b;
+  setCurrentValue(newValue: number) {
+    this._currentValue = newValue;
   }
 
-  multiply(a: number, b: number) {
-    return a * b;
+  add(arg: number) {
+    this._currentValue += arg;
   }
 
-  divide(a: number, b: number) {
-    return a / b;
+  subtract(arg: number) {
+    this._currentValue -= arg;
   }
 
-  reciprocal(a: number) {
-    return 1 / a;
+  multiply(arg: number) {
+    this._currentValue *= arg;
   }
 
-  percentage(a: number) {
-    return a / 100;
+  divide(arg: number) {
+    this._currentValue /= arg;
+  }
+
+  reciprocal() {
+    this._currentValue = 1 / this._currentValue;
+  }
+
+  percentage() {
+    this._currentValue = this._currentValue / 100;
   }
 
   // TODO: Write math implementation
 
-  root(a: number, power: number) {
-    return a;
+  root(ofPower: number) {
+    this._currentValue = this._currentValue;
   }
 
-  power(base: number, exponent: number) {
-    return base + exponent;
+  power(exponent: number) {
+    this._currentValue = this._currentValue;
   }
 
-  // TODO: Write memory
-
-  addToMemory(a: number) {
-    this._memory += a;
+  addCurrentValueToMemory() {
+    this._memory += this._currentValue;
   }
 
-  subtractFromMemory(a: number) {
-    this._memory -= a;
+  subtractCurrentValueFromMemory() {
+    this._memory -= this._currentValue;
   }
 
   recallFromMemory() {
-    return this._memory;
+    this._currentValue = this._memory;
   }
 
   clearMemory() {
