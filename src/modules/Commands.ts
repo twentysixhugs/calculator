@@ -120,7 +120,7 @@ export class RecallFromMemoryCommand implements Command {
   }
 }
 
-export class ClearMemory implements Command {
+export class ClearMemoryCommand implements Command {
   constructor(private receiver: Calculator) {
     this.receiver = receiver;
   }
