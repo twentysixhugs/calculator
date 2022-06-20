@@ -1,6 +1,8 @@
 /* Receiver */
 
-export default class Calculator {
+import { ICalculator } from "./interfaces/Calculator.interface";
+
+export default class Calculator implements ICalculator {
   private _memory = 0;
   private _currentValue = 0;
 
@@ -9,6 +11,7 @@ export default class Calculator {
   }
 
   setCurrentValue(newValue: number) {
+    // for keyboard input
     this._currentValue = newValue;
   }
 
