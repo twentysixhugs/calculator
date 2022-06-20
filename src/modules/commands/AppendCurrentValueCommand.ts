@@ -1,19 +1,20 @@
 import SetCurrentValueCommand from "./SetCurrentValueCommand";
 import { ICommand } from "../interfaces/Command.interface";
 import { ICalculator } from "../interfaces/Calculator.interface";
+import { IDisplay } from "../interfaces/Display.interface";
 
 export default class AppendCurrentValueCommand implements ICommand {
-  constructor(private receiver: ICalculator, private arg: number) {
-    this.receiver = receiver;
+  constructor(private calculator: ICalculator, private arg: number) {
+    this.calculator = calculator;
     this.arg = arg;
   }
 
   execute() {
-    const currentValue = this.receiver.getCurrentValue().toString();
+    const currentValue = this.calculator.getCurrentValue().toString();
     const valueToAdd = this.arg.toString();
 
     new SetCurrentValueCommand(
-      this.receiver,
+      this.calculator,
       Number(currentValue + valueToAdd)
     ).execute();
   }

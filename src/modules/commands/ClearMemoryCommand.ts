@@ -2,11 +2,11 @@ import { ICommand } from "../interfaces/Command.interface";
 import { ICalculator } from "../interfaces/Calculator.interface";
 
 export default class ClearMemoryCommand implements ICommand {
-  constructor(private receiver: ICalculator) {
-    this.receiver = receiver;
+  constructor(private calculator: ICalculator) {
+    this.calculator = calculator;
   }
 
   execute() {
-    this.receiver.clearMemory();
+    this.calculator.clearMemory();
   }
 }
