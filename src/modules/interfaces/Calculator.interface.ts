@@ -1,15 +1,21 @@
+import { Operator } from "../constants";
+
 export interface ICalculator {
-  getCurrentValue(): number;
+  operate(): boolean;
 
-  setCurrentValue(newValue: number): void;
+  getCurrentOperand(): number | null;
 
-  add(arg: number): void;
+  setCurrentOperand(value: number | null): void;
 
-  subtract(arg: number): void;
+  getCurrentOperandPosition(): "left" | "right";
 
-  multiply(arg: number): void;
+  setCurrentOperandPosition(position: "left" | "right"): void;
 
-  divide(arg: number): void;
+  setOperand(operandPosition: "left" | "right", value: number | null): boolean;
+
+  getOperand(operandPosition: "left" | "right"): number | null;
+
+  setOperator(operator: Operator | null): boolean;
 
   reciprocal(): void;
 
