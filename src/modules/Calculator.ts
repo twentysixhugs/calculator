@@ -9,6 +9,7 @@ export default class Calculator {
   }
 
   setCurrentValue(newValue: number) {
+    // for keyboard input
     this._currentValue = newValue;
   }
 
