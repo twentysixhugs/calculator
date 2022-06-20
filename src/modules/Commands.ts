@@ -129,3 +129,24 @@ export class ClearMemoryCommand implements Command {
     this.receiver.clearMemory();
   }
 }
+
+export class GetCurrentValueCommand implements Command {
+  constructor(private receiver: Calculator) {
+    this.receiver = receiver;
+  }
+
+  execute() {
+    this.receiver.getCurrentValue();
+  }
+}
+
+export class SetCurrentValueCommand implements Command {
+  constructor(private receiver: Calculator, private arg: number) {
+    this.receiver = receiver;
+    this.arg = arg;
+  }
+
+  execute() {
+    this.receiver.setCurrentValue(this.arg);
+  }
+}
