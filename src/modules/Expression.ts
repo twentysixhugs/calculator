@@ -4,7 +4,6 @@ export class Expression implements IExpression {
   _left = 0;
   _right = null;
   _operator = null;
-  _current: "left" | "right" = "left";
 
   get left() {
     return this._left;
@@ -18,10 +17,6 @@ export class Expression implements IExpression {
     return this._operator;
   }
 
-  get current() {
-    return this._current;
-  }
-
   set left(value) {
     this._left = value;
   }
@@ -32,9 +27,5 @@ export class Expression implements IExpression {
 
   set operator(value) {
     this._operator = value;
-  }
-
-  set current(value: "left" | "right") {
-    this._current = value;
   }
 }
