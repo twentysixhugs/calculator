@@ -74,6 +74,10 @@ export default class Calculator implements ICalculator {
     return this._expression.operator;
   }
 
+  getExpression(): IExpression {
+    return this._expression;
+  }
+
   setOperator(operator: Operator | null) {
     this._expression.operator = operator;
 

@@ -12,6 +12,8 @@ export interface ICalculator {
 
   setOperator(operator: Operator | null): boolean;
 
+  getExpression(): IExpression;
+
   reciprocal(): void;
 
   percentage(): void;
