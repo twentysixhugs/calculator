@@ -1,15 +1,18 @@
+import { Operator } from "../constants";
+import { IExpression } from "./Expression.interface";
+
 export interface ICalculator {
-  getCurrentValue(): number;
+  operate(): boolean;
 
-  setCurrentValue(newValue: number): void;
+  setOperand(operandPosition: "left" | "right", value: number | null): boolean;
 
-  add(arg: number): void;
+  getOperand(operandPosition: "left" | "right"): number | null;
 
-  subtract(arg: number): void;
+  getOperator(): Operator | null;
 
-  multiply(arg: number): void;
+  setOperator(operator: Operator | null): boolean;
 
-  divide(arg: number): void;
+  getExpression(): IExpression;
 
   reciprocal(): void;
 

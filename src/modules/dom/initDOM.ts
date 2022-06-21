@@ -1,5 +1,5 @@
-import initCommands from "./initCommands";
+import { initCommands } from "./initCommands";
 
-export default function initDOM() {
+export function initDOM() {
   initCommands();
 }
