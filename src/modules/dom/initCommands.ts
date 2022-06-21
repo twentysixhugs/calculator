@@ -31,6 +31,7 @@ function appendDisplay(value: string) {
     inputOutput.textContent += value;
   }
 }
+
 function initCurrentValueUpdate(calculator: ICalculator) {
   // Appends current value when clicking on 0-9
   // 1, 2, 2, 4 results in 1224
@@ -55,7 +56,7 @@ function initCurrentValueUpdate(calculator: ICalculator) {
 
       if (!expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "left").execute();
-        // appendDisplay(String(number));
+
         updateDisplay(calculator);
 
         console.log("left: " + calculator.getOperand("left"));
@@ -72,7 +73,6 @@ function initCurrentValueUpdate(calculator: ICalculator) {
 
       if (expressionHasLeftOperand && expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "right").execute();
-        // appendDisplay(String(number));
         updateDisplay(calculator);
 
         console.log("left: " + calculator.getOperand("left"));
@@ -111,7 +111,6 @@ function initOperators(calculator: ICalculator) {
           // If there's no right operand and operator, save input to operator
           if (!expressionHasRightOperand && !expressionOperator) {
             new SetOperatorCommand(calculator, receivedOperator).execute();
-            // appendDisplay(target.textContent || "");
             updateDisplay(calculator);
 
             console.log("left: " + calculator.getOperand("left"));
