@@ -1,6 +1,6 @@
 export enum Operator {
   Add = "+",
-  Subtract = "-",
-  Multiply = "*",
+  Subtract = "\u8722",
+  Multiply = "\u00D7",
   Divide = "/",
 }
