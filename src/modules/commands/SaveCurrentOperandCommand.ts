@@ -1,6 +1,5 @@
 import { ICommand } from "../interfaces/Command.interface";
 import { ICalculator } from "../interfaces/Calculator.interface";
-import { IDisplay } from "../interfaces/Display.interface";
 
 export default class SaveCurrentOperandCommand implements ICommand {
   constructor(private calculator: ICalculator, private arg: number) {
