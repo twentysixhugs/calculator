@@ -6,7 +6,7 @@ import { ICalculator } from "./interfaces/Calculator.interface";
 
 import { IExpression } from "./interfaces/Expression.interface";
 
-export default class Calculator implements ICalculator {
+export class Calculator implements ICalculator {
   private _memory = 0;
 
   constructor(private _expression: IExpression) {}
