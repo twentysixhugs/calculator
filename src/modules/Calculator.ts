@@ -15,8 +15,8 @@ export class Calculator implements ICalculator {
     /* If there is a full expression like 2 + 3 */
     /* Returns true if success, false otherwise */
     if (
-      this._expression.left &&
-      this._expression.right &&
+      this._expression.left !== null &&
+      this._expression.right !== null &&
       this._expression.operator
     ) {
       const left = this._expression.left;
