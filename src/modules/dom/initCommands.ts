@@ -43,10 +43,10 @@ function initCurrentValueUpdate(calculator: ICalculator) {
       let number;
 
       if (shouldChangeNextOperatorSign) {
-        number = -Number(target.id);
+        number = -Number(target.dataset.number);
         shouldChangeNextOperatorSign = false;
       } else {
-        number = Number(target.id);
+        number = Number(target.dataset.number);
       }
 
       // If the expression doesn't have an operator,
