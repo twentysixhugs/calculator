@@ -16,7 +16,7 @@ const inputOutput = document.querySelector(
 
 let shouldChangeNextOperatorSign = false;
 
-export default function initCommands() {
+export function initCommands() {
   const calculator = new Calculator(new Expression());
 
   initCurrentValueUpdate(calculator);
