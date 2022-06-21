@@ -1,6 +1,7 @@
 /* Receiver */
 
 import { Operator } from "./constants";
+import { Expression } from "./Expression";
 import { ICalculator } from "./interfaces/Calculator.interface";
 
 import { IExpression } from "./interfaces/Expression.interface";
@@ -45,28 +46,11 @@ export default class Calculator implements ICalculator {
 
       this.setOperator(null);
       this.setOperand("right", null);
-      this.setCurrentOperandPosition("left");
 
       return true;
     }
 
     return false;
-  }
-
-  getCurrentOperand(): number | null {
-    return this.getOperand(this.getCurrentOperandPosition());
-  }
-
-  setCurrentOperand(value: number | null) {
-    this.setOperand(this.getCurrentOperandPosition(), value);
-  }
-
-  getCurrentOperandPosition(): "left" | "right" {
-    return this._expression.current;
-  }
-
-  setCurrentOperandPosition(position: "left" | "right") {
-    this._expression.current = position;
   }
 
   getOperand(operandPosition: "left" | "right") {
@@ -84,6 +68,10 @@ export default class Calculator implements ICalculator {
     }
 
     return false;
+  }
+
+  getOperator(): Operator | null {
+    return this._expression.operator;
   }
 
   setOperator(operator: Operator | null) {
