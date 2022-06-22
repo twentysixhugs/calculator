@@ -7,6 +7,6 @@ export class PercentageCommand implements ICommand {
   }
 
   execute() {
-    this.calculator.percentage();
+    return this.calculator.percentage();
   }
 }

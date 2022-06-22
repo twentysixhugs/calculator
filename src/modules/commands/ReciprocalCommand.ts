@@ -7,6 +7,6 @@ export class ReciprocalCommand implements ICommand {
   }
 
   execute() {
-    this.calculator.reciprocal();
+    return this.calculator.reciprocal();
   }
 }

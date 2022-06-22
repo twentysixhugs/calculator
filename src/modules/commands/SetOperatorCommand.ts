@@ -9,6 +9,6 @@ export class SetOperatorCommand implements ICommand {
   ) {}
 
   execute() {
-    this.calculator.setOperator(this.operator);
+    return this.calculator.setOperator(this.operator);
   }
 }

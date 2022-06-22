@@ -7,6 +7,6 @@ export class SubtractFromMemoryCommand implements ICommand {
   }
 
   execute() {
-    this.calculator.subtractCurrentValueFromMemory();
+    return this.calculator.subtractCurrentValueFromMemory();
   }
 }

@@ -14,19 +14,19 @@ export interface ICalculator {
 
   getExpression(): IExpression;
 
-  reciprocal(): void;
+  reciprocal(): number;
 
-  percentage(): void;
+  percentage(): number;
 
-  root(ofPower: number): void;
+  root(ofPower: number): number;
 
-  power(exponent: number): void;
+  power(exponent: number): number;
+
+  recallFromMemory(): number;
 
   addCurrentValueToMemory(): void;
 
   subtractCurrentValueFromMemory(): void;
-
-  recallFromMemory(): void;
 
   clearMemory(): void;
 }

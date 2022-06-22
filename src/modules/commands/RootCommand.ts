@@ -8,6 +8,6 @@ export class RootCommand implements ICommand {
   }
 
   execute() {
-    this.calculator.root(this.arg);
+    return this.calculator.root(this.arg);
   }
 }

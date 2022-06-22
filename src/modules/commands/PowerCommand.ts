@@ -8,6 +8,6 @@ export class PowerCommand implements ICommand {
   }
 
   execute() {
-    this.calculator.power(this.arg);
+    return this.calculator.power(this.arg);
   }
 }

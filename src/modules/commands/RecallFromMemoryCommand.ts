@@ -7,6 +7,6 @@ export class RecallFromMemoryCommand implements ICommand {
   }
 
   execute() {
-    this.calculator.recallFromMemory();
+    return this.calculator.recallFromMemory();
   }
 }
