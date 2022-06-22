@@ -286,11 +286,11 @@ body,
   }
 
   &--middle {
-    $gap: 1.85rem;
+    $gap: 1.75rem;
 
     position: relative;
 
-    @include buttons-flex-centered(column, 1rem, var(--middle-gap));
+    @include buttons-flex-centered(column, $gap, var(--middle-gap));
     @include outer-wrapper($gap, column);
     @include inner-wrapper($gap);
 
