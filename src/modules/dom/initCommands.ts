@@ -1,9 +1,7 @@
 import { Calculator } from "../Calculator";
 import { AppendOperandCommand } from "../commands/AppendOperandCommand";
-import { ChangeOperandSignCommand } from "../commands/ChangeOperandSignCommand";
 import { GetOperandCommand } from "../commands/GetOperandCommand";
 import { GetOperatorCommand } from "../commands/GetOperatorCommand";
-import { GetStringifiedExpressionCommand } from "../commands/GetStringifiedExpressionCommand";
 import { OperateCommand } from "../commands/OperateCommand";
 import { SetOperatorCommand } from "../commands/SetOperatorCommand";
 import {
@@ -14,10 +12,7 @@ import {
 import { Expression } from "../Expression";
 import { ICalculator } from "../interfaces/Calculator.interface";
 import { ICommand } from "../interfaces/Command.interface";
-
-const inputOutput = document.querySelector(
-  ".js-input-output"
-) as HTMLInputElement;
+import { updateDisplay, appendDisplay } from "./display";
 
 let shouldChangeNextOperatorSign = false;
 
@@ -27,14 +22,6 @@ export function initCommands() {
   initCurrentValueUpdate(calculator);
   initOperators(calculator);
   initEquals(calculator);
-}
-
-function appendDisplay(value: string) {
-  if (inputOutput.textContent === "0") {
-    inputOutput.textContent = value;
-  } else {
-    inputOutput.textContent += value;
-  }
 }
 
 function initCurrentValueUpdate(calculator: ICalculator) {
@@ -206,29 +193,6 @@ function initEquals(calculator: ICalculator) {
   });
 }
 
-function initImmediateOperations() {
-  // These operations are immediately executed on the operand
-  // once the corresponding button is clicked
-  document
-    .querySelectorAll<HTMLButtonElement>(".js-immediate-operation")
-    .forEach((el) => {
-      el.addEventListener("click", (e) => {
-        const target = e.target as HTMLButtonElement;
-        const immediateOperation = target.dataset.operation;
-
-        switch (immediateOperation) {
-          case ImmediateOperations.TenPowerX: {
-          }
-        }
-      });
-    });
-}
-
-function initImmediateOperation(
-  selector: ImmediateOperations,
-  command: ICommand
-) {}
-
 function isOperatorAssignable(
   arg: string | undefined | null
 ): arg is Operator | null {
@@ -244,10 +208,4 @@ function isOperatorAssignable(
   }
 
   return false;
-}
-
-function updateDisplay(calculator: ICalculator) {
-  const expression = new GetStringifiedExpressionCommand(calculator).execute();
-
-  inputOutput.textContent = expression;
 }
