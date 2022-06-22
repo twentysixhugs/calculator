@@ -116,6 +116,10 @@ export class Calculator implements ICalculator {
     return 1;
   }
 
+  factorial(operand: number) {
+    return 1;
+  }
+
   addToMemory(operand: number): void {
     return;
   }
