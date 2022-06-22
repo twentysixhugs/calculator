@@ -1,4 +1,3 @@
-import { Calculator } from "../Calculator";
 import { AppendOperandCommand } from "../commands/AppendOperandCommand";
 import { InvertSignCommand } from "../commands/InvertSignCommand";
 import { CubicRootCommand } from "../commands/CubicRootCommand";
@@ -6,7 +5,6 @@ import { FactorialCommand } from "../commands/FactorialCommand";
 import { GetOperandCommand } from "../commands/GetOperandCommand";
 import { GetOperatorCommand } from "../commands/GetOperatorCommand";
 import { OperateCommand } from "../commands/OperateCommand";
-import { PowerCommand } from "../commands/PowerCommand";
 import { SetOperatorCommand } from "../commands/SetOperatorCommand";
 import { SquareRootCommand } from "../commands/SquareRootCommand";
 import {
@@ -14,13 +12,7 @@ import {
   Operator,
   OperatorCharacters,
 } from "../constants";
-import { Expression } from "../Expression";
-import { ICalculator } from "../interfaces/Calculator.interface";
-import {
-  CommandConstructor,
-  ImmediateCommandConstructor,
-  ICommand,
-} from "../interfaces/Command.interface";
+import { ImmediateCommandConstructor } from "../interfaces/Command.interface";
 import { updateDisplay, appendDisplay } from "./display";
 import { ReciprocalCommand } from "../commands/ReciprocalCommand";
 import { PercentageCommand } from "../commands/PercentageCommand";
@@ -28,18 +20,18 @@ import { PowerOfThreeCommand } from "../commands/PowerOfThreeCommand";
 import { PowerOfTwoCommand } from "../commands/PowerOfTwoCommand";
 import { TenToThePowerCommand } from "../commands/TenToThePowerCommand";
 
+import { calculator } from "../Calculator";
+
 let shouldChangeNextOperatorSign = false;
 
 export function initCommands() {
-  const calculator = new Calculator(new Expression());
-
-  initCurrentValueUpdate(calculator);
-  initOperators(calculator);
-  initEquals(calculator);
-  initAllImmediateOperations(calculator);
+  initCurrentValueUpdate();
+  initOperators();
+  initEquals();
+  initAllImmediateOperations();
 }
 
-function initCurrentValueUpdate(calculator: ICalculator) {
+function initCurrentValueUpdate() {
   // Appends current value when clicking on 0-9
   // 1, 2, 2, 4 results in 1224
 
@@ -66,7 +58,7 @@ function initCurrentValueUpdate(calculator: ICalculator) {
       if (!expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "left").execute();
 
-        updateDisplay(calculator);
+        updateDisplay();
 
         console.log("left: " + calculator.getOperand("left"));
         console.log("operator: " + calculator.getOperator());
@@ -83,7 +75,7 @@ function initCurrentValueUpdate(calculator: ICalculator) {
 
       if (expressionHasLeftOperand && expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "right").execute();
-        updateDisplay(calculator);
+        updateDisplay();
 
         console.log("left: " + calculator.getOperand("left"));
         console.log("operator: " + calculator.getOperator());
@@ -95,7 +87,7 @@ function initCurrentValueUpdate(calculator: ICalculator) {
   });
 }
 
-function initOperators(calculator: ICalculator) {
+function initOperators() {
   document
     .querySelectorAll<HTMLButtonElement>(".js-operation")
     .forEach((el) => {
@@ -124,7 +116,7 @@ function initOperators(calculator: ICalculator) {
           // If there's no right operand and operator, save input to operator
           if (!expressionHasRightOperand && !expressionOperator) {
             new SetOperatorCommand(calculator, receivedOperator).execute();
-            updateDisplay(calculator);
+            updateDisplay();
 
             console.log("left: " + calculator.getOperand("left"));
             console.log("operator: " + calculator.getOperator());
@@ -143,7 +135,7 @@ function initOperators(calculator: ICalculator) {
           ) {
             shouldChangeNextOperatorSign = true;
 
-            updateDisplay(calculator);
+            updateDisplay();
             appendDisplay(OperatorCharacters.Subtract);
 
             console.log("left: " + calculator.getOperand("left"));
@@ -160,7 +152,7 @@ function initOperators(calculator: ICalculator) {
           if (receivedOperator === Operator.Subtract) {
             shouldChangeNextOperatorSign = true;
 
-            updateDisplay(calculator);
+            updateDisplay();
             appendDisplay(OperatorCharacters.Subtract);
 
             return;
@@ -176,14 +168,14 @@ function initOperators(calculator: ICalculator) {
         ) {
           if (new OperateCommand(calculator).execute()) {
             new SetOperatorCommand(calculator, receivedOperator).execute();
-            updateDisplay(calculator);
+            updateDisplay();
           }
         }
       });
     });
 }
 
-function initEquals(calculator: ICalculator) {
+function initEquals() {
   const equalsButton = document.querySelector(
     ".js-equals"
   ) as HTMLButtonElement;
@@ -202,75 +194,38 @@ function initEquals(calculator: ICalculator) {
       expressionOperator
     ) {
       if (new OperateCommand(calculator).execute()) {
-        updateDisplay(calculator);
+        updateDisplay();
       }
     }
   });
 }
 
-function initAllImmediateOperations(calculator: ICalculator) {
+function initAllImmediateOperations() {
   // These operations are immediately executed on the operand
   // once the corresponding button is clicked
 
-  initImmediateOperation(
-    ImmediateOperations.CubicRoot,
-    CubicRootCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.CubicRoot, CubicRootCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.Factorial,
-    FactorialCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.Factorial, FactorialCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.InvertSign,
-    InvertSignCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.InvertSign, InvertSignCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.OneDividedByX,
-    ReciprocalCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.OneDividedByX, ReciprocalCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.Percentage,
-    PercentageCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.Percentage, PercentageCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.SquareRoot,
-    SquareRootCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.SquareRoot, SquareRootCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.TenPowerX,
-    TenToThePowerCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.TenPowerX, TenToThePowerCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.XPowerThree,
-    PowerOfThreeCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.XPowerThree, PowerOfThreeCommand);
 
-  initImmediateOperation(
-    ImmediateOperations.XPowerTwo,
-    PowerOfTwoCommand,
-    calculator
-  );
+  initImmediateOperation(ImmediateOperations.XPowerTwo, PowerOfTwoCommand);
 }
 
 function initImmediateOperation(
   selector: ImmediateOperations,
-  Command: ImmediateCommandConstructor,
-  calculator: ICalculator
+  Command: ImmediateCommandConstructor
 ) {
   const btn = document.querySelector(selector) as HTMLButtonElement;
 
@@ -288,7 +243,7 @@ function initImmediateOperation(
     if (expressionHasLeftOperand && !expressionHasOperator) {
       // expression: "2", command is applied to "2"
       new Command(calculator, "left").execute();
-      updateDisplay(calculator);
+      updateDisplay();
     }
 
     // expression: "2 + 4", command is applied to "4"
@@ -298,7 +253,7 @@ function initImmediateOperation(
       expressionHasRightOperand
     ) {
       new Command(calculator, "right").execute();
-      updateDisplay(calculator);
+      updateDisplay();
     }
   });
 }
