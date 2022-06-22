@@ -1,7 +1,6 @@
 /* Receiver */
 
 import { Operator } from "./constants";
-import { Expression } from "./Expression";
 import { ICalculator } from "./interfaces/Calculator.interface";
 
 import { IExpression } from "./interfaces/Expression.interface";
