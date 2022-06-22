@@ -6,10 +6,11 @@ export class GetStringifiedExpressionCommand implements ICommand {
   constructor(private calculator: ICalculator) {}
 
   execute() {
-    const expression = this.calculator.getExpression();
+    // Returns stringified version of current expression
+    const { left, operator, right } = this.calculator.getExpression();
 
-    return `${expression.left ?? ""}${
-      expression.operator ? OperatorCharacters[expression.operator] : ""
-    }${expression.right ?? ""}`;
+    return `${left ?? ""}${operator ? OperatorCharacters[operator] : ""}${
+      right ?? ""
+    }`;
   }
 }

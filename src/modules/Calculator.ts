@@ -14,15 +14,10 @@ export class Calculator implements ICalculator {
   operate(): boolean {
     /* If there is a full expression like 2 + 3 */
     /* Returns true if success, false otherwise */
-    if (
-      this._expression.left !== null &&
-      this._expression.right !== null &&
-      this._expression.operator
-    ) {
-      const left = this._expression.left;
-      const right = this._expression.right;
+    const { left, right, operator } = this._expression;
 
-      switch (this._expression.operator) {
+    if (left !== null && right !== null && operator) {
+      switch (operator) {
         case Operator.Add: {
           this.setOperand("left", this._add(left, right));
           break;
