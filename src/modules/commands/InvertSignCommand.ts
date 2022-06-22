@@ -1,7 +1,7 @@
 import { ICommand } from "../interfaces/Command.interface";
 import { ICalculator } from "../interfaces/Calculator.interface";
 
-export class PercentageCommand implements ICommand {
+export class InvertSignCommand implements ICommand {
   constructor(
     private calculator: ICalculator,
     private operandPosition: "left" | "right"
@@ -9,11 +9,10 @@ export class PercentageCommand implements ICommand {
 
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
+
     if (!operand) return false;
 
-    const result = this.calculator.percentage(operand);
-    this.calculator.setOperand(this.operandPosition, result);
-
+    this.calculator.setOperand(this.operandPosition, -operand);
     return true;
   }
 }

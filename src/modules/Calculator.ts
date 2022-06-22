@@ -4,8 +4,9 @@ import { Operator } from "./constants";
 import { ICalculator } from "./interfaces/Calculator.interface";
 
 import { IExpression } from "./interfaces/Expression.interface";
+import { Expression } from "./Expression";
 
-export class Calculator implements ICalculator {
+class Calculator implements ICalculator {
   private _memory = 0;
 
   constructor(private _expression: IExpression) {}
@@ -116,6 +117,10 @@ export class Calculator implements ICalculator {
     return 1;
   }
 
+  factorial(operand: number) {
+    return 1;
+  }
+
   addToMemory(operand: number): void {
     return;
   }
@@ -132,3 +137,5 @@ export class Calculator implements ICalculator {
     return;
   }
 }
+
+export const calculator = new Calculator(new Expression());

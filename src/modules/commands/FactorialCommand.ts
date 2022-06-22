@@ -1,20 +1,19 @@
 import { ICommand } from "../interfaces/Command.interface";
 import { ICalculator } from "../interfaces/Calculator.interface";
 
-export class ChangeOperandSignCommand implements ICommand {
+export class FactorialCommand implements ICommand {
   constructor(
     private calculator: ICalculator,
     private operandPosition: "left" | "right"
   ) {}
 
   execute() {
-    const operandValue = this.calculator.getOperand(this.operandPosition);
+    const operand = this.calculator.getOperand(this.operandPosition);
+    if (!operand) return false;
 
-    if (!operandValue) {
-      return false;
-    }
+    const result = this.calculator.factorial(operand);
+    this.calculator.setOperand(this.operandPosition, result);
 
-    this.calculator.setOperand(this.operandPosition, -operandValue);
     return true;
   }
 }

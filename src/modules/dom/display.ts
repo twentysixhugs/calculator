@@ -1,11 +1,11 @@
 import { GetStringifiedExpressionCommand } from "../commands/GetStringifiedExpressionCommand";
-import { ICalculator } from "../interfaces/Calculator.interface";
+import { calculator } from "../Calculator";
 
 const inputOutput = document.querySelector(
   ".js-input-output"
 ) as HTMLInputElement;
 
-export function updateDisplay(calculator: ICalculator) {
+export function updateDisplay() {
   const expression = new GetStringifiedExpressionCommand(calculator).execute();
 
   inputOutput.textContent = expression;

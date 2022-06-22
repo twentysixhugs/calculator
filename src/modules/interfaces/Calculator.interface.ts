@@ -22,6 +22,8 @@ export interface ICalculator {
 
   power(operand: number, exponent: number): number;
 
+  factorial(operand: number): number;
+
   addToMemory(operand: number): void;
 
   subtractFromMemory(operand: number): void;
