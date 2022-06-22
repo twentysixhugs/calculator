@@ -1,9 +1,14 @@
 import { Calculator } from "../Calculator";
 import { AppendOperandCommand } from "../commands/AppendOperandCommand";
+import { InvertSignCommand } from "../commands/InvertSignCommand";
+import { CubicRootCommand } from "../commands/CubicRootCommand";
+import { FactorialCommand } from "../commands/FactorialCommand";
 import { GetOperandCommand } from "../commands/GetOperandCommand";
 import { GetOperatorCommand } from "../commands/GetOperatorCommand";
 import { OperateCommand } from "../commands/OperateCommand";
+import { PowerCommand } from "../commands/PowerCommand";
 import { SetOperatorCommand } from "../commands/SetOperatorCommand";
+import { SquareRootCommand } from "../commands/SquareRootCommand";
 import {
   ImmediateOperations,
   Operator,
@@ -11,8 +16,17 @@ import {
 } from "../constants";
 import { Expression } from "../Expression";
 import { ICalculator } from "../interfaces/Calculator.interface";
-import { ICommand } from "../interfaces/Command.interface";
+import {
+  CommandConstructor,
+  ImmediateCommandConstructor,
+  ICommand,
+} from "../interfaces/Command.interface";
 import { updateDisplay, appendDisplay } from "./display";
+import { ReciprocalCommand } from "../commands/ReciprocalCommand";
+import { PercentageCommand } from "../commands/PercentageCommand";
+import { PowerOfThreeCommand } from "../commands/PowerOfThreeCommand";
+import { PowerOfTwoCommand } from "../commands/PowerOfTwoCommand";
+import { TenToThePowerCommand } from "../commands/TenToThePowerCommand";
 
 let shouldChangeNextOperatorSign = false;
 
@@ -22,6 +36,7 @@ export function initCommands() {
   initCurrentValueUpdate(calculator);
   initOperators(calculator);
   initEquals(calculator);
+  initAllImmediateOperations(calculator);
 }
 
 function initCurrentValueUpdate(calculator: ICalculator) {
@@ -189,6 +204,101 @@ function initEquals(calculator: ICalculator) {
       if (new OperateCommand(calculator).execute()) {
         updateDisplay(calculator);
       }
+    }
+  });
+}
+
+function initAllImmediateOperations(calculator: ICalculator) {
+  // These operations are immediately executed on the operand
+  // once the corresponding button is clicked
+
+  initImmediateOperation(
+    ImmediateOperations.CubicRoot,
+    CubicRootCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.Factorial,
+    FactorialCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.InvertSign,
+    InvertSignCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.OneDividedByX,
+    ReciprocalCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.Percentage,
+    PercentageCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.SquareRoot,
+    SquareRootCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.TenPowerX,
+    TenToThePowerCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.XPowerThree,
+    PowerOfThreeCommand,
+    calculator
+  );
+
+  initImmediateOperation(
+    ImmediateOperations.XPowerTwo,
+    PowerOfTwoCommand,
+    calculator
+  );
+}
+
+function initImmediateOperation(
+  selector: ImmediateOperations,
+  Command: ImmediateCommandConstructor,
+  calculator: ICalculator
+) {
+  const btn = document.querySelector(selector) as HTMLButtonElement;
+
+  btn.addEventListener("click", (e) => {
+    const leftOperand = new GetOperandCommand(calculator, "left").execute();
+    const rightOperand = new GetOperandCommand(calculator, "right").execute();
+
+    const expressionHasLeftOperand = leftOperand !== null;
+    const expressionHasRightOperand = rightOperand !== null;
+
+    const expressionHasOperator = !!new GetOperatorCommand(
+      calculator
+    ).execute();
+
+    if (expressionHasLeftOperand && !expressionHasOperator) {
+      // expression: "2", command is applied to "2"
+      new Command(calculator, "left").execute();
+      updateDisplay(calculator);
+    }
+
+    // expression: "2 + 4", command is applied to "4"
+    if (
+      expressionHasLeftOperand &&
+      expressionHasOperator &&
+      expressionHasRightOperand
+    ) {
+      new Command(calculator, "right").execute();
+      updateDisplay(calculator);
     }
   });
 }
