@@ -1,7 +1,6 @@
 /* Receiver */
 
 import { Operator } from "./constants";
-import { Expression } from "./Expression";
 import { ICalculator } from "./interfaces/Calculator.interface";
 
 import { IExpression } from "./interfaces/Expression.interface";
@@ -14,15 +13,10 @@ export class Calculator implements ICalculator {
   operate(): boolean {
     /* If there is a full expression like 2 + 3 */
     /* Returns true if success, false otherwise */
-    if (
-      this._expression.left !== null &&
-      this._expression.right !== null &&
-      this._expression.operator
-    ) {
-      const left = this._expression.left;
-      const right = this._expression.right;
+    const { left, right, operator } = this._expression;
 
-      switch (this._expression.operator) {
+    if (left !== null && right !== null && operator) {
+      switch (operator) {
         case Operator.Add: {
           this.setOperand("left", this._add(left, right));
           break;
@@ -106,37 +100,35 @@ export class Calculator implements ICalculator {
     return a / b;
   }
 
-  reciprocal() {
-    // this._currentValue = 1 / this._currentValue;
+  reciprocal(operand: number) {
+    return 1 / operand;
   }
 
-  percentage() {
-    // this._currentValue = this._currentValue / 100;
+  percentage(operand: number) {
+    return operand / 100;
   }
 
-  // TODO: Write math implementation
-
-  root(ofPower: number) {
-    // this._currentValue = this._currentValue;
+  root(operand: number, ofPower: number) {
+    return 1;
   }
 
-  power(exponent: number) {
-    // this._currentValue = this._currentValue;
+  power(operand: number, exponent: number) {
+    return 1;
   }
 
-  addCurrentValueToMemory() {
-    // this._memory += this._currentValue;
+  addToMemory(operand: number): void {
+    return;
   }
 
-  subtractCurrentValueFromMemory() {
-    // this._memory -= this._currentValue;
+  subtractFromMemory(operand: number): void {
+    return;
   }
 
   recallFromMemory() {
-    // this._currentValue = this._memory;
+    return 1;
   }
 
-  clearMemory() {
-    // this._memory = 0;
+  clearMemory(): void {
+    return;
   }
 }

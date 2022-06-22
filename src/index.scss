@@ -87,6 +87,7 @@ body,
     Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol";
   --font: 17px "Poppins", var(--system-font);
+  --icon-button: 17px;
 
   --padding: 1.3rem;
   --middle-gap: 2.5rem;
@@ -227,8 +228,9 @@ body,
     justify-content: space-around;
   }
 
-  @media (max-device-height: 400px) and (orientation: landscape) {
+  @media (max-device-height: 350px) and (orientation: landscape) {
     padding: 0;
+    background: none;
   }
 }
 
@@ -250,6 +252,7 @@ body,
       display: flex;
       flex-flow: $flex-flow;
       gap: $gap;
+      justify-content: center;
     }
   }
 
@@ -258,6 +261,8 @@ body,
       display: flex;
       gap: $gap;
       flex-flow: $flex-flow;
+      justify-content: center;
+      align-items: center;
     }
   }
 
@@ -271,7 +276,8 @@ body,
 
     @media (max-device-width: 1000px) and (orientation: landscape) {
       @include buttons-flex-centered(row, 4rem, 2rem);
-      @include outer-wrapper($gap, column);
+      @include outer-wrapper($gap, column-reverse);
+      align-items: flex-start;
     }
 
     @media (max-width: 350px) {
@@ -280,11 +286,11 @@ body,
   }
 
   &--middle {
-    $gap: 1rem;
+    $gap: 1.75rem;
 
     position: relative;
 
-    @include buttons-flex-centered(column, 1rem, var(--middle-gap));
+    @include buttons-flex-centered(column, $gap, var(--middle-gap));
     @include outer-wrapper($gap, column);
     @include inner-wrapper($gap);
 
@@ -334,10 +340,12 @@ body,
   }
 
   .btn {
+    --text-color: rgb(49, 49, 49);
+
     background: none;
     border-radius: 50%;
 
-    color: rgb(49, 49, 49);
+    color: var(--text-color);
 
     &:active {
       background: rgb(231, 231, 231);
@@ -363,5 +371,30 @@ body,
         background: rgb(59, 116, 177);
       }
     }
+
+    &--icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: var(--icon-button);
+      height: var(--icon-button);
+
+      color: var(--text-color);
+
+      & path {
+        margin: 0;
+      }
+    }
   }
+}
+
+svg {
+  margin: 0 !important;
 }

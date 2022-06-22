@@ -22,7 +22,6 @@ export class AppendOperandCommand implements ICommand {
         this.operandPosition,
         parseFloat(operandAtPosition + valueToAppend)
       );
-      console.log(operandAtPosition + valueToAppend);
     }
   }
 }

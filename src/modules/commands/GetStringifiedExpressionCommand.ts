@@ -3,15 +3,14 @@ import { ICalculator } from "../interfaces/Calculator.interface";
 import { OperatorCharacters } from "../constants";
 
 export class GetStringifiedExpressionCommand implements ICommand {
-  public result?: string;
-
   constructor(private calculator: ICalculator) {}
 
   execute() {
-    const expression = this.calculator.getExpression();
+    // Returns a stringified version of the current expression
+    const { left, operator, right } = this.calculator.getExpression();
 
-    this.result = `${expression.left ?? ""}${
-      expression.operator ? OperatorCharacters[expression.operator] : ""
-    }${expression.right ?? ""}`;
+    return `${left ?? ""}${operator ? OperatorCharacters[operator] : ""}${
+      right ?? ""
+    }`;
   }
 }

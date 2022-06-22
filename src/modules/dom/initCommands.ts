@@ -1,18 +1,18 @@
 import { Calculator } from "../Calculator";
 import { AppendOperandCommand } from "../commands/AppendOperandCommand";
-import { ChangeOperandSignCommand } from "../commands/ChangeOperandSignCommand";
 import { GetOperandCommand } from "../commands/GetOperandCommand";
 import { GetOperatorCommand } from "../commands/GetOperatorCommand";
-import { GetStringifiedExpressionCommand } from "../commands/GetStringifiedExpressionCommand";
 import { OperateCommand } from "../commands/OperateCommand";
 import { SetOperatorCommand } from "../commands/SetOperatorCommand";
-import { Operator, OperatorCharacters } from "../constants";
+import {
+  ImmediateOperations,
+  Operator,
+  OperatorCharacters,
+} from "../constants";
 import { Expression } from "../Expression";
 import { ICalculator } from "../interfaces/Calculator.interface";
-
-const inputOutput = document.querySelector(
-  ".js-input-output"
-) as HTMLInputElement;
+import { ICommand } from "../interfaces/Command.interface";
+import { updateDisplay, appendDisplay } from "./display";
 
 let shouldChangeNextOperatorSign = false;
 
@@ -22,14 +22,6 @@ export function initCommands() {
   initCurrentValueUpdate(calculator);
   initOperators(calculator);
   initEquals(calculator);
-}
-
-function appendDisplay(value: string) {
-  if (inputOutput.textContent === "0") {
-    inputOutput.textContent = value;
-  } else {
-    inputOutput.textContent += value;
-  }
 }
 
 function initCurrentValueUpdate(calculator: ICalculator) {
@@ -52,7 +44,9 @@ function initCurrentValueUpdate(calculator: ICalculator) {
       // If the expression doesn't have an operator,
       // append the left operand on every input
 
-      const expressionHasOperator = getOperator(calculator);
+      const expressionHasOperator = new GetOperatorCommand(
+        calculator
+      ).execute();
 
       if (!expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "left").execute();
@@ -69,7 +63,8 @@ function initCurrentValueUpdate(calculator: ICalculator) {
       // If the expression has the left operand and an operator,
       // append the left operand on every input
 
-      const expressionHasLeftOperand = getOperand(calculator, "left") !== null;
+      const expressionHasLeftOperand =
+        new GetOperandCommand(calculator, "left").execute() !== null;
 
       if (expressionHasLeftOperand && expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "right").execute();
@@ -97,15 +92,18 @@ function initOperators(calculator: ICalculator) {
           return;
         }
 
-        const leftOperand = getOperand(calculator, "left");
+        const leftOperand = new GetOperandCommand(calculator, "left").execute();
 
-        const rightOperand = getOperand(calculator, "right");
+        const rightOperand = new GetOperandCommand(
+          calculator,
+          "right"
+        ).execute();
 
         const expressionHasLeftOperand = leftOperand !== null;
 
         const expressionHasRightOperand = rightOperand !== null;
 
-        const expressionOperator = getOperator(calculator);
+        const expressionOperator = new GetOperatorCommand(calculator).execute();
 
         if (expressionHasLeftOperand) {
           // If there's no right operand and operator, save input to operator
@@ -161,10 +159,7 @@ function initOperators(calculator: ICalculator) {
           expressionHasRightOperand &&
           expressionOperator
         ) {
-          const operateCommand = new OperateCommand(calculator);
-          operateCommand.execute();
-
-          if (operateCommand.result) {
+          if (new OperateCommand(calculator).execute()) {
             new SetOperatorCommand(calculator, receivedOperator).execute();
             updateDisplay(calculator);
           }
@@ -178,55 +173,24 @@ function initEquals(calculator: ICalculator) {
     ".js-equals"
   ) as HTMLButtonElement;
   equalsButton.addEventListener("click", (e) => {
-    const expressionHasLeftOperand = getOperand(calculator, "left") !== null;
+    const expressionHasLeftOperand =
+      new GetOperandCommand(calculator, "left") !== null;
 
-    const expressionHasRightOperand = getOperand(calculator, "right") !== null;
+    const expressionHasRightOperand =
+      new GetOperandCommand(calculator, "right") !== null;
 
-    const expressionOperator = getOperator(calculator);
+    const expressionOperator = new GetOperatorCommand(calculator);
 
     if (
       expressionHasLeftOperand &&
       expressionHasRightOperand &&
       expressionOperator
     ) {
-      const operateCommand = new OperateCommand(calculator);
-      operateCommand.execute();
-
-      if (operateCommand.result) {
+      if (new OperateCommand(calculator).execute()) {
         updateDisplay(calculator);
       }
     }
   });
-}
-
-function getOperand(
-  calculator: ICalculator,
-  operandPosition: "left" | "right"
-) {
-  const getOperandCommand = new GetOperandCommand(calculator, operandPosition);
-  getOperandCommand.execute();
-
-  return getOperandCommand.result;
-}
-
-function getOperator(calculator: ICalculator) {
-  const getOperatorCommand = new GetOperatorCommand(calculator);
-  getOperatorCommand.execute();
-
-  return getOperatorCommand.result;
-}
-
-function changeOperatorSign(
-  calculator: ICalculator,
-  operandPosition: "left" | "right"
-) {
-  const changeOperatorSignCommand = new ChangeOperandSignCommand(
-    calculator,
-    operandPosition
-  );
-  changeOperatorSignCommand.execute();
-
-  return changeOperatorSignCommand.result;
 }
 
 function isOperatorAssignable(
@@ -244,20 +208,4 @@ function isOperatorAssignable(
   }
 
   return false;
-}
-
-function getExpression(calculator: ICalculator) {
-  const getStringifiedExpressionCommand = new GetStringifiedExpressionCommand(
-    calculator
-  );
-
-  getStringifiedExpressionCommand.execute();
-
-  return getStringifiedExpressionCommand.result!;
-}
-
-function updateDisplay(calculator: ICalculator) {
-  const expression = getExpression(calculator);
-
-  inputOutput.textContent = expression;
 }
