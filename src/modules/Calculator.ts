@@ -102,44 +102,34 @@ export class Calculator implements ICalculator {
   }
 
   reciprocal() {
-    // this._currentValue = 1 / this._currentValue;
     return 1;
   }
 
   percentage() {
-    // this._currentValue = this._currentValue / 100;
     return 1;
   }
 
-  // TODO: Write math implementation
-
   root(ofPower: number) {
-    // this._currentValue = this._currentValue;
     return 1;
   }
 
   power(exponent: number) {
-    // this._currentValue = this._currentValue;
     return 1;
   }
 
-  addCurrentValueToMemory() {
-    // this._memory += this._currentValue;
+  addToMemory(operand: number): void {
     return;
   }
 
-  subtractCurrentValueFromMemory() {
-    // this._memory -= this._currentValue;
+  subtractFromMemory(operand: number): void {
     return;
   }
 
   recallFromMemory() {
-    // this._currentValue = this._memory;
     return 1;
   }
 
-  clearMemory() {
-    // this._memory = 0;
+  clearMemory(): void {
     return;
   }
 }

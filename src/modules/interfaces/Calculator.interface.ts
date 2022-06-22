@@ -22,11 +22,11 @@ export interface ICalculator {
 
   power(exponent: number): number;
 
+  addToMemory(operand: number): void;
+
+  subtractFromMemory(operand: number): void;
+
   recallFromMemory(): number;
-
-  addCurrentValueToMemory(): void;
-
-  subtractCurrentValueFromMemory(): void;
 
   clearMemory(): void;
 }
