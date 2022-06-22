@@ -101,19 +101,19 @@ export class Calculator implements ICalculator {
     return a / b;
   }
 
-  reciprocal() {
+  reciprocal(operand: number) {
+    return 1 / operand;
+  }
+
+  percentage(operand: number) {
+    return operand / 100;
+  }
+
+  root(operand: number, ofPower: number) {
     return 1;
   }
 
-  percentage() {
-    return 1;
-  }
-
-  root(ofPower: number) {
-    return 1;
-  }
-
-  power(exponent: number) {
+  power(operand: number, exponent: number) {
     return 1;
   }
 

@@ -14,13 +14,13 @@ export interface ICalculator {
 
   getExpression(): IExpression;
 
-  reciprocal(): number;
+  reciprocal(operand: number): number;
 
-  percentage(): number;
+  percentage(operand: number): number;
 
-  root(ofPower: number): number;
+  root(operand: number, ofPower: number): number;
 
-  power(exponent: number): number;
+  power(operand: number, exponent: number): number;
 
   addToMemory(operand: number): void;
 
