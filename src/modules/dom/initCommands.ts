@@ -1,11 +1,11 @@
-import { AppendOperandCommand } from "../commands/AppendOperandCommand";
-import { InvertSignCommand } from "../commands/InvertSignCommand";
-import { CubicRootCommand } from "../commands/CubicRootCommand";
-import { FactorialCommand } from "../commands/FactorialCommand";
-import { GetOperandCommand } from "../commands/GetOperandCommand";
-import { GetOperatorCommand } from "../commands/GetOperatorCommand";
-import { SetOperatorCommand } from "../commands/SetOperatorCommand";
-import { SquareRootCommand } from "../commands/SquareRootCommand";
+import { AppendOperandCommand } from "../commands/Expression/AppendOperandCommand";
+import { InvertSignCommand } from "../commands/Immediate/InvertSignCommand";
+import { CubicRootCommand } from "../commands/Immediate/CubicRootCommand";
+import { FactorialCommand } from "../commands/Immediate/FactorialCommand";
+import { GetOperandCommand } from "../commands/Expression/GetOperandCommand";
+import { GetOperatorCommand } from "../commands/Expression/GetOperatorCommand";
+import { SetOperatorCommand } from "../commands/Expression/SetOperatorCommand";
+import { SquareRootCommand } from "../commands/Immediate/SquareRootCommand";
 import {
   DoubleOperandOperations,
   ImmediateOperations,
@@ -19,15 +19,15 @@ import {
   ImmediateCommandConstructor,
 } from "../interfaces/Command.interface";
 import { updateDisplay, appendDisplay } from "./display";
-import { ReciprocalCommand } from "../commands/ReciprocalCommand";
-import { PercentageCommand } from "../commands/PercentageCommand";
-import { PowerOfThreeCommand } from "../commands/PowerOfThreeCommand";
-import { PowerOfTwoCommand } from "../commands/PowerOfTwoCommand";
-import { TenToThePowerCommand } from "../commands/TenToThePowerCommand";
+import { ReciprocalCommand } from "../commands/Immediate/ReciprocalCommand";
+import { PercentageCommand } from "../commands/Immediate/PercentageCommand";
+import { PowerOfThreeCommand } from "../commands/Immediate/PowerOfThreeCommand";
+import { PowerOfTwoCommand } from "../commands/Immediate/PowerOfTwoCommand";
+import { TenToThePowerCommand } from "../commands/Immediate/TenToThePowerCommand";
 
 import { calculator } from "../Calculator";
-import { AddToMemoryCommand } from "../commands/AddToMemoryCommand";
-import { SubtractFromMemoryCommand } from "../commands/SubtractFromMemoryCommand";
+import { AddToMemoryCommand } from "../commands/Memory/AddToMemoryCommand";
+import { SubtractFromMemoryCommand } from "../commands/Memory/SubtractFromMemoryCommand";
 import { AddCommand } from "../commands/DoubleOperand/AddCommand";
 import { SubtractCommand } from "../commands/DoubleOperand/SubtractCommand";
 import { MultiplyCommand } from "../commands/DoubleOperand/MultiplyCommand";
