@@ -14,7 +14,7 @@ export function initEquals() {
     const expressionHasRightOperand =
       new GetOperandCommand(calculator, "right") !== null;
 
-    const expressionOperator = new GetOperatorCommand(calculator);
+    const expressionOperator = new GetOperatorCommand(calculator).execute();
 
     const { CurrentCommand } = calculator;
 
