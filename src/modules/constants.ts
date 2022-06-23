@@ -3,6 +3,8 @@ export enum Operator {
   Subtract = "Subtract",
   Multiply = "Multiply",
   Divide = "Divide",
+  Yroot = "Yroot",
+  Power = "Power",
 }
 
 export enum OperatorCharacters {
@@ -10,6 +12,8 @@ export enum OperatorCharacters {
   Subtract = "\u2212",
   Multiply = "\u00d7",
   Divide = "\u002F",
+  Yroot = " yroot ",
+  Power = "^",
 }
 
 export enum ImmediateOperations {

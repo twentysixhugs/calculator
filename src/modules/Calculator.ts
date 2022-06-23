@@ -37,6 +37,15 @@ class Calculator implements ICalculator {
           this.setOperand("left", this._divide(left, right));
           break;
         }
+
+        case Operator.Yroot: {
+          this.setOperand("left", this.root(left, right));
+          break;
+        }
+
+        case Operator.Power: {
+          this.setOperand("left", this.power(left, right));
+        }
       }
 
       this.setOperator(null);
