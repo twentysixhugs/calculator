@@ -9,7 +9,7 @@ export class SubtractCommand implements ICommand {
     const right = this.calculator.getOperand("right");
 
     if (left === null || right === null) {
-      return false;
+      return null;
     }
 
     const result = this.calculator.subtract(left, right);
@@ -18,6 +18,6 @@ export class SubtractCommand implements ICommand {
     this.calculator.setOperator(null);
     this.calculator.setOperand("right", null);
 
-    return true;
+    return result;
   }
 }

@@ -9,7 +9,7 @@ export class DivideCommand implements ICommand {
     const right = this.calculator.getOperand("right");
 
     if (left === null || right === null || right === 0) {
-      return false;
+      return null;
     }
 
     const result = this.calculator.divide(left, right);
@@ -18,6 +18,6 @@ export class DivideCommand implements ICommand {
     this.calculator.setOperator(null);
     this.calculator.setOperand("right", null);
 
-    return true;
+    return result;
   }
 }

@@ -24,7 +24,7 @@ export function initEquals() {
       expressionOperator &&
       CurrentCommand
     ) {
-      if (new CurrentCommand(calculator).execute()) {
+      if (new CurrentCommand(calculator).execute() !== null) {
         console.log("called");
         updateDisplay();
       }

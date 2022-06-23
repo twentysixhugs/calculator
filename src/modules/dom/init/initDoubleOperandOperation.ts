@@ -94,7 +94,7 @@ export function initDoubleOperandOperation(
       expressionHasRightOperand &&
       CurrentCommand
     ) {
-      if (new CurrentCommand(calculator).execute()) {
+      if (new CurrentCommand(calculator).execute() !== null) {
         canAssignOperator &&
           new SetOperatorCommand(calculator, receivedOperator).execute();
         calculator.CurrentCommand = Command;
