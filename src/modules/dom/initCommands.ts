@@ -4,15 +4,20 @@ import { CubicRootCommand } from "../commands/CubicRootCommand";
 import { FactorialCommand } from "../commands/FactorialCommand";
 import { GetOperandCommand } from "../commands/GetOperandCommand";
 import { GetOperatorCommand } from "../commands/GetOperatorCommand";
-import { OperateCommand } from "../commands/OperateCommand";
 import { SetOperatorCommand } from "../commands/SetOperatorCommand";
 import { SquareRootCommand } from "../commands/SquareRootCommand";
 import {
+  DoubleOperandOperations,
   ImmediateOperations,
+  MemoryUpdateOperation,
   Operator,
   OperatorCharacters,
 } from "../constants";
-import { ImmediateCommandConstructor } from "../interfaces/Command.interface";
+import {
+  CommandConstructor,
+  ICommand,
+  ImmediateCommandConstructor,
+} from "../interfaces/Command.interface";
 import { updateDisplay, appendDisplay } from "./display";
 import { ReciprocalCommand } from "../commands/ReciprocalCommand";
 import { PercentageCommand } from "../commands/PercentageCommand";
@@ -21,13 +26,21 @@ import { PowerOfTwoCommand } from "../commands/PowerOfTwoCommand";
 import { TenToThePowerCommand } from "../commands/TenToThePowerCommand";
 
 import { calculator } from "../Calculator";
+import { AddToMemoryCommand } from "../commands/AddToMemoryCommand";
+import { SubtractFromMemoryCommand } from "../commands/SubtractFromMemoryCommand";
+import { AddCommand } from "../commands/DoubleOperand/AddCommand";
+import { SubtractCommand } from "../commands/DoubleOperand/SubtractCommand";
+import { MultiplyCommand } from "../commands/DoubleOperand/MultiplyCommand";
+import { DivideCommand } from "../commands/DoubleOperand/DivideCommand";
+import { RootCommand } from "../commands/DoubleOperand/RootCommand";
+import { PowerCommand } from "../commands/DoubleOperand/PowerCommand";
 
 let shouldChangeNextOperatorSign = false;
+let CurrentCommand: CommandConstructor | null = null;
 
 export function initCommands() {
   initCurrentValueUpdate();
-  initOperators();
-  initEquals();
+  initAllDoubleOperandOperations();
   initAllImmediateOperations();
 }
 
@@ -75,6 +88,7 @@ function initCurrentValueUpdate() {
 
       if (expressionHasLeftOperand && expressionHasOperator) {
         new AppendOperandCommand(calculator, number, "right").execute();
+        initEquals();
         updateDisplay();
 
         console.log("left: " + calculator.getOperand("left"));
@@ -85,94 +99,6 @@ function initCurrentValueUpdate() {
       }
     });
   });
-}
-
-function initOperators() {
-  document
-    .querySelectorAll<HTMLButtonElement>(".js-operation")
-    .forEach((el) => {
-      el.addEventListener("click", (e) => {
-        const target = e.target as HTMLButtonElement;
-        const receivedOperator = target.dataset.operator;
-
-        if (!isOperatorAssignable(receivedOperator)) {
-          return;
-        }
-
-        const leftOperand = new GetOperandCommand(calculator, "left").execute();
-
-        const rightOperand = new GetOperandCommand(
-          calculator,
-          "right"
-        ).execute();
-
-        const expressionHasLeftOperand = leftOperand !== null;
-
-        const expressionHasRightOperand = rightOperand !== null;
-
-        const expressionOperator = new GetOperatorCommand(calculator).execute();
-
-        if (expressionHasLeftOperand) {
-          // If there's no right operand and operator, save input to operator
-          if (!expressionHasRightOperand && !expressionOperator) {
-            new SetOperatorCommand(calculator, receivedOperator).execute();
-            updateDisplay();
-
-            console.log("left: " + calculator.getOperand("left"));
-            console.log("operator: " + calculator.getOperator());
-            console.log("right: " + calculator.getOperand("right"));
-
-            return;
-          }
-
-          // If there's operator, no right operand and the input operator is subtract,
-          // Then make sure it will be saved as negative and display minus
-          if (
-            expressionOperator &&
-            !expressionHasRightOperand &&
-            !rightOperand &&
-            receivedOperator === Operator.Subtract
-          ) {
-            shouldChangeNextOperatorSign = true;
-
-            updateDisplay();
-            appendDisplay(OperatorCharacters.Subtract);
-
-            console.log("left: " + calculator.getOperand("left"));
-            console.log("operator: " + calculator.getOperator());
-            console.log("right: " + calculator.getOperand("right"));
-
-            return;
-          }
-        }
-
-        // If there's no left and the input is minus,
-        // then make sure the left operand will be saved as negative and display minus
-        if (!expressionHasLeftOperand) {
-          if (receivedOperator === Operator.Subtract) {
-            shouldChangeNextOperatorSign = true;
-
-            updateDisplay();
-            appendDisplay(OperatorCharacters.Subtract);
-
-            return;
-          }
-        }
-
-        // If there are both operands and the operator, calculate the value and display it
-
-        if (
-          expressionHasLeftOperand &&
-          expressionHasRightOperand &&
-          expressionOperator
-        ) {
-          if (new OperateCommand(calculator).execute()) {
-            new SetOperatorCommand(calculator, receivedOperator).execute();
-            updateDisplay();
-          }
-        }
-      });
-    });
 }
 
 function initEquals() {
@@ -191,9 +117,112 @@ function initEquals() {
     if (
       expressionHasLeftOperand &&
       expressionHasRightOperand &&
-      expressionOperator
+      expressionOperator &&
+      CurrentCommand
     ) {
-      if (new OperateCommand(calculator).execute()) {
+      if (new CurrentCommand(calculator).execute()) {
+        console.log("called");
+        updateDisplay();
+      }
+    }
+  });
+}
+
+function initAllDoubleOperandOperations() {
+  initDoubleOperandOperation(DoubleOperandOperations.Add, AddCommand);
+
+  initDoubleOperandOperation(DoubleOperandOperations.Subtract, SubtractCommand);
+
+  initDoubleOperandOperation(DoubleOperandOperations.Multiply, MultiplyCommand);
+
+  initDoubleOperandOperation(DoubleOperandOperations.Divide, DivideCommand);
+
+  initDoubleOperandOperation(DoubleOperandOperations.Yroot, RootCommand);
+
+  initDoubleOperandOperation(DoubleOperandOperations.Power, PowerCommand);
+}
+
+function initDoubleOperandOperation(
+  selector: DoubleOperandOperations,
+  Command: CommandConstructor
+) {
+  const btn = document.querySelector(selector) as HTMLButtonElement;
+
+  btn.addEventListener("click", (e) => {
+    const target = e.target as HTMLButtonElement;
+    const leftOperand = new GetOperandCommand(calculator, "left").execute();
+    const rightOperand = new GetOperandCommand(calculator, "right").execute();
+
+    const expressionHasLeftOperand = leftOperand !== null;
+    const expressionHasRightOperand = rightOperand !== null;
+
+    const expressionHasOperator = !!new GetOperatorCommand(
+      calculator
+    ).execute();
+
+    const receivedOperator = target.dataset.operator;
+
+    const canAssignOperator = isOperatorAssignable(receivedOperator);
+
+    if (expressionHasLeftOperand) {
+      // If there's no right operand and operator, save input to operator
+      if (!expressionHasRightOperand && !expressionHasOperator) {
+        canAssignOperator &&
+          new SetOperatorCommand(calculator, receivedOperator).execute();
+        updateDisplay();
+
+        CurrentCommand = Command;
+
+        console.log("left: " + calculator.getOperand("left"));
+        console.log("operator: " + calculator.getOperator());
+        console.log("right: " + calculator.getOperand("right"));
+
+        return;
+      }
+
+      // If there's operator, no right operand and the input operator is subtract,
+      // Then make sure it will be saved as negative and display minus
+      if (
+        expressionHasOperator &&
+        !expressionHasRightOperand &&
+        !rightOperand &&
+        receivedOperator === Operator.Subtract
+      ) {
+        shouldChangeNextOperatorSign = true;
+
+        updateDisplay();
+        appendDisplay(OperatorCharacters.Subtract);
+
+        console.log("left: " + calculator.getOperand("left"));
+        console.log("operator: " + calculator.getOperator());
+        console.log("right: " + calculator.getOperand("right"));
+
+        return;
+      }
+    }
+
+    // If there's no left and the input is minus,
+    // then make sure the left operand will be saved as negative and display minus
+    if (!expressionHasLeftOperand) {
+      if (receivedOperator === Operator.Subtract) {
+        shouldChangeNextOperatorSign = true;
+
+        updateDisplay();
+        appendDisplay(OperatorCharacters.Subtract);
+
+        return;
+      }
+    }
+
+    // If there are both operands and the operator, calculate the value and display it
+    if (
+      expressionHasLeftOperand &&
+      expressionHasOperator &&
+      expressionHasRightOperand
+    ) {
+      if (new Command(calculator).execute()) {
+        canAssignOperator &&
+          new SetOperatorCommand(calculator, receivedOperator).execute();
         updateDisplay();
       }
     }
@@ -256,6 +285,64 @@ function initImmediateOperation(
       updateDisplay();
     }
   });
+}
+
+function initMemoryOperations() {
+  const memoryPlus = document.querySelector(".js-m-plus") as HTMLButtonElement;
+  const memoryMinus = document.querySelector(
+    ".js-m-minus"
+  ) as HTMLButtonElement;
+  const memoryClear = document.querySelector(".js-mc") as HTMLButtonElement;
+  const memoryRecall = document.querySelector(".js-mr") as HTMLButtonElement;
+
+  memoryPlus.addEventListener(
+    "click",
+    handleMemoryUpdate.bind(null, MemoryUpdateOperation.Add)
+  );
+  memoryPlus.addEventListener(
+    "click",
+    handleMemoryUpdate.bind(null, MemoryUpdateOperation.Subtract)
+  );
+
+  memoryClear.addEventListener(
+    "click",
+    handleMemoryUpdate.bind(null, MemoryUpdateOperation.Clear)
+  );
+
+  function handleMemoryUpdate(
+    updateOperation: MemoryUpdateOperation,
+    e: MouseEvent
+  ) {
+    // Used for handling adding to and subtracting from the memory
+    const target = e.target as HTMLButtonElement;
+
+    // Left -> save
+
+    const leftOperand = new GetOperandCommand(calculator, "left").execute();
+    const rightOperand = new GetOperandCommand(calculator, "right").execute();
+    const operator = new GetOperatorCommand(calculator);
+
+    const expressionHasLeftOperand = leftOperand !== null;
+    const expressionHasRightOperand = leftOperand !== null;
+
+    let updateValue;
+
+    // Only left operand is entered, no operator after it. E.g. "5"
+    if (expressionHasLeftOperand && !operator) {
+      // Use left operand for updating memory
+      updateValue = leftOperand;
+    }
+
+    // Full expression is entered
+    if (expressionHasLeftOperand && operator && expressionHasRightOperand) {
+      // Operate on both operands, save their result to memory
+      // updateValue = new OperateCommand(calculator).execute();
+    }
+
+    if (!updateValue) {
+      return;
+    }
+  }
 }
 
 function isOperatorAssignable(

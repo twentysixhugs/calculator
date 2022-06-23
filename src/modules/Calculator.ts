@@ -11,52 +11,6 @@ class Calculator implements ICalculator {
 
   constructor(private _expression: IExpression) {}
 
-  operate(): boolean {
-    /* If there is a full expression like 2 + 3 */
-    /* Returns true if success, false otherwise */
-    const { left, right, operator } = this._expression;
-
-    if (left !== null && right !== null && operator) {
-      switch (operator) {
-        case Operator.Add: {
-          this.setOperand("left", this._add(left, right));
-          break;
-        }
-
-        case Operator.Subtract: {
-          this.setOperand("left", this._subtract(left, right));
-          break;
-        }
-
-        case Operator.Multiply: {
-          this.setOperand("left", this._multiply(left, right));
-          break;
-        }
-
-        case Operator.Divide: {
-          this.setOperand("left", this._divide(left, right));
-          break;
-        }
-
-        case Operator.Yroot: {
-          this.setOperand("left", this.root(left, right));
-          break;
-        }
-
-        case Operator.Power: {
-          this.setOperand("left", this.power(left, right));
-        }
-      }
-
-      this.setOperator(null);
-      this.setOperand("right", null);
-
-      return true;
-    }
-
-    return false;
-  }
-
   getOperand(operandPosition: "left" | "right") {
     return this._expression[operandPosition];
   }
@@ -94,19 +48,19 @@ class Calculator implements ICalculator {
     return false;
   }
 
-  private _add(a: number, b: number) {
+  add(a: number, b: number) {
     return a + b;
   }
 
-  private _subtract(a: number, b: number) {
+  subtract(a: number, b: number) {
     return a - b;
   }
 
-  private _multiply(a: number, b: number) {
+  multiply(a: number, b: number) {
     return a * b;
   }
 
-  private _divide(a: number, b: number) {
+  divide(a: number, b: number) {
     return a / b;
   }
 
