@@ -1,5 +1,8 @@
 import { ImmediateOperations } from "../../constants";
-import { ImmediateCommandConstructor } from "../../interfaces/Command.interface";
+import {
+  CommandConstructor,
+  ImmediateCommandConstructor,
+} from "../../interfaces/Command.interface";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { updateDisplay } from "../display";
@@ -7,7 +10,7 @@ import { calculator } from "../../Calculator";
 
 export function initImmediateOperation(
   selector: ImmediateOperations,
-  Command: ImmediateCommandConstructor
+  ImmediateCommand: ImmediateCommandConstructor
 ) {
   const btn = document.querySelector(selector) as HTMLButtonElement;
 
@@ -24,18 +27,24 @@ export function initImmediateOperation(
 
     if (expressionHasLeftOperand && !expressionHasOperator) {
       // expression: "2", command is applied to "2"
-      new Command(calculator, "left").execute();
+      new ImmediateCommand(calculator, "left").execute();
       updateDisplay();
     }
 
-    // expression: "2 + 4", command is applied to "4"
+    // expression: "2 + 4", expression result is calculated and the command is applied to it
+
+    const { CurrentCommand } = calculator;
+
     if (
       expressionHasLeftOperand &&
       expressionHasOperator &&
-      expressionHasRightOperand
+      expressionHasRightOperand &&
+      CurrentCommand
     ) {
-      new Command(calculator, "right").execute();
-      updateDisplay();
+      if (new CurrentCommand(calculator).execute()) {
+        new ImmediateCommand(calculator, "left").execute();
+        updateDisplay();
+      }
     }
   });
 }
