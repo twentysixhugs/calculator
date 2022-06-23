@@ -12,6 +12,7 @@ import { updateDisplay } from "../display";
 import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
 import { isOperatorAssignable } from "../helpers";
+import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -94,9 +95,14 @@ export function initDoubleOperandOperation(
       expressionHasRightOperand &&
       CurrentCommand
     ) {
-      if (new CurrentCommand(calculator).execute() !== null) {
+      const result = new CurrentCommand(calculator).execute();
+
+      if (result !== null && typeof result === "number") {
+        new ShowCalculationResultCommand(calculator, result).execute();
+
         canAssignOperator &&
           new SetOperatorCommand(calculator, receivedOperator).execute();
+
         calculator.CurrentCommand = Command;
 
         updateDisplay();

@@ -14,10 +14,6 @@ export class MultiplyCommand implements ICommand {
 
     const result = this.calculator.multiply(left, right);
 
-    this.calculator.setOperand("left", result);
-    this.calculator.setOperator(null);
-    this.calculator.setOperand("right", null);
-
     return result;
   }
 }
