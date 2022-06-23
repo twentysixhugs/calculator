@@ -1,7 +1,11 @@
 import { Operator } from "../constants";
 import { IExpression } from "./Expression.interface";
+import { CommandConstructor } from "./Command.interface";
 
 export interface ICalculator {
+  shouldChangeNextOperatorSign: boolean;
+  CurrentCommand: CommandConstructor | null;
+
   setOperand(operandPosition: "left" | "right", value: number | null): boolean;
 
   getOperand(operandPosition: "left" | "right"): number | null;

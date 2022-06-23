@@ -6,7 +6,28 @@ import { ICalculator } from "./interfaces/Calculator.interface";
 import { IExpression } from "./interfaces/Expression.interface";
 import { Expression } from "./Expression";
 
+import { CommandConstructor } from "./interfaces/Command.interface";
+
 class Calculator implements ICalculator {
+  private _shouldChangeNextOperatorSign = false;
+  private _CurrentCommand: CommandConstructor | null = null;
+
+  get CurrentCommand() {
+    return this._CurrentCommand;
+  }
+
+  set CurrentCommand(value: CommandConstructor | null) {
+    this._CurrentCommand = value;
+  }
+
+  get shouldChangeNextOperatorSign() {
+    return this._shouldChangeNextOperatorSign;
+  }
+
+  set shouldChangeNextOperatorSign(value: boolean) {
+    this._shouldChangeNextOperatorSign = value;
+  }
+
   private _memory = 0;
 
   constructor(private _expression: IExpression) {}

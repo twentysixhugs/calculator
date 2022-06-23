@@ -35,9 +35,6 @@ import { DivideCommand } from "../commands/DoubleOperand/DivideCommand";
 import { RootCommand } from "../commands/DoubleOperand/RootCommand";
 import { PowerCommand } from "../commands/DoubleOperand/PowerCommand";
 
-let shouldChangeNextOperatorSign = false;
-let CurrentCommand: CommandConstructor | null = null;
-
 export function initCommands() {
   initCurrentValueUpdate();
   initAllDoubleOperandOperations();
@@ -54,9 +51,9 @@ function initCurrentValueUpdate() {
 
       let number;
 
-      if (shouldChangeNextOperatorSign) {
+      if (calculator.shouldChangeNextOperatorSign) {
         number = -Number(target.dataset.number);
-        shouldChangeNextOperatorSign = false;
+        calculator.shouldChangeNextOperatorSign = false;
       } else {
         number = Number(target.dataset.number);
       }
@@ -113,6 +110,8 @@ function initEquals() {
       new GetOperandCommand(calculator, "right") !== null;
 
     const expressionOperator = new GetOperatorCommand(calculator);
+
+    const { CurrentCommand } = calculator;
 
     if (
       expressionHasLeftOperand &&
@@ -171,7 +170,7 @@ function initDoubleOperandOperation(
           new SetOperatorCommand(calculator, receivedOperator).execute();
         updateDisplay();
 
-        CurrentCommand = Command;
+        calculator.CurrentCommand = Command;
 
         console.log("left: " + calculator.getOperand("left"));
         console.log("operator: " + calculator.getOperator());
@@ -188,7 +187,7 @@ function initDoubleOperandOperation(
         !rightOperand &&
         receivedOperator === Operator.Subtract
       ) {
-        shouldChangeNextOperatorSign = true;
+        calculator.shouldChangeNextOperatorSign = true;
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
@@ -205,7 +204,7 @@ function initDoubleOperandOperation(
     // then make sure the left operand will be saved as negative and display minus
     if (!expressionHasLeftOperand) {
       if (receivedOperator === Operator.Subtract) {
-        shouldChangeNextOperatorSign = true;
+        calculator.shouldChangeNextOperatorSign = true;
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
