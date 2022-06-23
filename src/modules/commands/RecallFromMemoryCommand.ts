@@ -5,6 +5,9 @@ export class RecallFromMemoryCommand implements ICommand {
   constructor(private calculator: ICalculator) {}
 
   execute() {
-    return this.calculator.recallFromMemory();
+    this.calculator.setOperand("left", this.calculator.recallFromMemory());
+
+    this.calculator.setOperator(null);
+    this.calculator.setOperand("right", null);
   }
 }
