@@ -1,5 +1,7 @@
-import { initCommands } from "./initCommands";
+import { initOperations } from "./init/initOperations";
+import { initCurrentValueUpdate } from "./init/initCurrentValueUpdate";
 
 export function initDOM() {
-  initCommands();
+  initCurrentValueUpdate();
+  initOperations();
 }

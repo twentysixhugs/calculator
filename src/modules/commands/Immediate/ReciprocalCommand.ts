@@ -1,7 +1,7 @@
-import { ICommand } from "../interfaces/Command.interface";
-import { ICalculator } from "../interfaces/Calculator.interface";
+import { ICommand } from "../../interfaces/Command.interface";
+import { ICalculator } from "../../interfaces/Calculator.interface";
 
-export class SquareRootCommand implements ICommand {
+export class ReciprocalCommand implements ICommand {
   constructor(
     private calculator: ICalculator,
     private operandPosition: "left" | "right"
@@ -11,7 +11,7 @@ export class SquareRootCommand implements ICommand {
     const operand = this.calculator.getOperand(this.operandPosition);
     if (!operand) return false;
 
-    const result = this.calculator.root(operand, 2);
+    const result = this.calculator.reciprocal(operand);
     this.calculator.setOperand(this.operandPosition, result);
 
     return true;

@@ -1,8 +1,10 @@
 import { Operator } from "../constants";
 import { IExpression } from "./Expression.interface";
+import { CommandConstructor } from "./Command.interface";
 
 export interface ICalculator {
-  operate(): boolean;
+  shouldChangeNextOperatorSign: boolean;
+  CurrentCommand: CommandConstructor | null;
 
   setOperand(operandPosition: "left" | "right", value: number | null): boolean;
 
@@ -13,6 +15,14 @@ export interface ICalculator {
   setOperator(operator: Operator | null): boolean;
 
   getExpression(): IExpression;
+
+  add(a: number, b: number): number;
+
+  subtract(a: number, b: number): number;
+
+  divide(a: number, b: number): number;
+
+  multiply(a: number, b: number): number;
 
   reciprocal(operand: number): number;
 

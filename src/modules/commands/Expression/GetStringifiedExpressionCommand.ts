@@ -1,6 +1,6 @@
-import { ICommand } from "../interfaces/Command.interface";
-import { ICalculator } from "../interfaces/Calculator.interface";
-import { OperatorCharacters } from "../constants";
+import { ICommand } from "../../interfaces/Command.interface";
+import { ICalculator } from "../../interfaces/Calculator.interface";
+import { OperatorCharacters } from "../../constants";
 
 export class GetStringifiedExpressionCommand implements ICommand {
   constructor(private calculator: ICalculator) {}

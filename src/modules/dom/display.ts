@@ -1,4 +1,4 @@
-import { GetStringifiedExpressionCommand } from "../commands/GetStringifiedExpressionCommand";
+import { GetStringifiedExpressionCommand } from "../commands/Expression/GetStringifiedExpressionCommand";
 import { calculator } from "../Calculator";
 
 const inputOutput = document.querySelector(

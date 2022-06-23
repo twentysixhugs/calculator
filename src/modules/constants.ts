@@ -16,6 +16,15 @@ export enum OperatorCharacters {
   Power = "^",
 }
 
+export enum DoubleOperandOperations {
+  Add = "[data-operation='Add']",
+  Subtract = "[data-operation='Subtract']",
+  Multiply = "[data-operation='Multiply']",
+  Divide = "[data-operation='Divide']",
+  Yroot = "[data-operation='Yroot']",
+  Power = "[data-operation='Power']",
+}
+
 export enum ImmediateOperations {
   // Each member has a corresponding HTML data-operation attribute
   TenPowerX = "[data-operation='10-power-x']",
@@ -27,4 +36,10 @@ export enum ImmediateOperations {
   XPowerTwo = "[data-operation='x-power-2']",
   XPowerThree = "[data-operation='x-power-3']",
   Percentage = "[data-operation='percentage']",
+}
+
+export enum MemoryUpdateOperation {
+  Add = "Add",
+  Subtract = "Subtract",
+  Clear = "Clear",
 }
