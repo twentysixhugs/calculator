@@ -131,19 +131,19 @@ class Calculator implements ICalculator {
   }
 
   addToMemory(operand: number): void {
-    return;
+    this._memory += operand;
   }
 
   subtractFromMemory(operand: number): void {
-    return;
+    this._memory -= operand;
   }
 
   recallFromMemory() {
-    return 1;
+    return this._memory;
   }
 
   clearMemory(): void {
-    return;
+    this._memory = 0;
   }
 }
 
