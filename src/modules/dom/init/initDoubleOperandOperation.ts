@@ -86,14 +86,19 @@ export function initDoubleOperandOperation(
     }
 
     // If there are both operands and the operator, calculate the value and display it
+    const { CurrentCommand } = calculator;
+
     if (
       expressionHasLeftOperand &&
       expressionHasOperator &&
-      expressionHasRightOperand
+      expressionHasRightOperand &&
+      CurrentCommand
     ) {
-      if (new Command(calculator).execute()) {
+      if (new CurrentCommand(calculator).execute()) {
         canAssignOperator &&
           new SetOperatorCommand(calculator, receivedOperator).execute();
+        calculator.CurrentCommand = Command;
+
         updateDisplay();
       }
     }
