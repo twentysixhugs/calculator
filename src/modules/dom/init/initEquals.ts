@@ -1,6 +1,7 @@
 import { calculator } from "../../Calculator";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
+import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
 import { updateDisplay } from "../display";
 
 export function initEquals() {
@@ -24,8 +25,11 @@ export function initEquals() {
       expressionOperator &&
       CurrentCommand
     ) {
-      if (new CurrentCommand(calculator).execute() !== null) {
+      const result = new CurrentCommand(calculator).execute();
+
+      if (result !== null && typeof result === "number") {
         console.log("called");
+        new ShowCalculationResultCommand(calculator, result).execute();
         updateDisplay();
       }
     }

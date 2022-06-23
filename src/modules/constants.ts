@@ -38,8 +38,9 @@ export enum ImmediateOperations {
   Percentage = "[data-operation='percentage']",
 }
 
-export enum MemoryUpdateOperation {
-  Add = "Add",
-  Subtract = "Subtract",
-  Clear = "Clear",
+export enum MemoryOperation {
+  Add = ".js-m-plus",
+  Subtract = ".js-m-minus",
+  Clear = ".js-mc",
+  Recall = ".js-mr",
 }
