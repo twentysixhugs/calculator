@@ -9,7 +9,7 @@ export class TenToThePowerCommand implements ICommand {
 
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
-    if (!operand) return false;
+    if (operand === null) return false;
 
     const result = this.calculator.power(10, operand);
     this.calculator.setOperand(this.operandPosition, result);

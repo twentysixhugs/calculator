@@ -252,7 +252,6 @@ body,
       display: flex;
       flex-flow: $flex-flow;
       gap: $gap;
-      justify-content: center;
     }
   }
 
@@ -297,26 +296,20 @@ body,
     @media (max-device-width: 1000px) and (orientation: landscape) {
       flex-flow: row-reverse;
 
-      & .wrapper--landscape-margin-left {
-        $gap: 1.5rem;
-        .btn {
-          margin-left: $gap;
-        }
-      }
-
       & .wrapper--powers {
         flex-flow: column !important;
+        gap: $gap !important;
       }
 
       .btn {
         position: relative;
 
         &--equals {
-          left: calc(var(--middle-gap) + 1rem);
+          left: calc(var(--middle-gap) + 1.8rem);
         }
 
         &--divide {
-          right: calc(var(--middle-gap) + 1rem);
+          right: calc(var(--middle-gap) + 1.8rem);
         }
       }
     }

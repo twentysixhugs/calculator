@@ -8,6 +8,10 @@ export interface ImmediateCommandConstructor {
   new (calculator: ICalculator, operandPosition: "left" | "right"): ICommand;
 }
 
+export interface MemoryCommandConstructor {
+  new (calculator: ICalculator, operand: number): ICommand;
+}
+
 export interface ICommand {
   execute(): unknown;
 }

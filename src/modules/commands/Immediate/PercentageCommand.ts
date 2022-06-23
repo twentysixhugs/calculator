@@ -9,7 +9,7 @@ export class PercentageCommand implements ICommand {
 
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
-    if (!operand) return false;
+    if (operand === null) return false;
 
     const result = this.calculator.percentage(operand);
     this.calculator.setOperand(this.operandPosition, result);

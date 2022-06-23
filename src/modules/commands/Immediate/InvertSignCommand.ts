@@ -10,7 +10,7 @@ export class InvertSignCommand implements ICommand {
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
 
-    if (!operand) return false;
+    if (operand === null) return false;
 
     this.calculator.setOperand(this.operandPosition, -operand);
     return true;

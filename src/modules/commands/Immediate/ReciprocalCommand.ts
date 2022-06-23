@@ -9,7 +9,7 @@ export class ReciprocalCommand implements ICommand {
 
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
-    if (!operand) return false;
+    if (operand === null) return false;
 
     const result = this.calculator.reciprocal(operand);
     this.calculator.setOperand(this.operandPosition, result);

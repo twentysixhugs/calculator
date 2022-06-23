@@ -12,6 +12,7 @@ import { updateDisplay } from "../display";
 import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
 import { isOperatorAssignable } from "../helpers";
+import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -86,14 +87,24 @@ export function initDoubleOperandOperation(
     }
 
     // If there are both operands and the operator, calculate the value and display it
+    const { CurrentCommand } = calculator;
+
     if (
       expressionHasLeftOperand &&
       expressionHasOperator &&
-      expressionHasRightOperand
+      expressionHasRightOperand &&
+      CurrentCommand
     ) {
-      if (new Command(calculator).execute()) {
+      const result = new CurrentCommand(calculator).execute();
+
+      if (result !== null && typeof result === "number") {
+        new ShowCalculationResultCommand(calculator, result).execute();
+
         canAssignOperator &&
           new SetOperatorCommand(calculator, receivedOperator).execute();
+
+        calculator.CurrentCommand = Command;
+
         updateDisplay();
       }
     }

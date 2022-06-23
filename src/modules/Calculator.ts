@@ -61,8 +61,6 @@ class Calculator implements ICalculator {
     this._expression.operator = operator;
 
     if (!this._expression.operator || operator === null) {
-      this._expression.operator = operator;
-
       return true;
     }
 
@@ -107,10 +105,12 @@ class Calculator implements ICalculator {
 
   addToMemory(operand: number): void {
     this._memory += operand;
+    console.log("add");
   }
 
   subtractFromMemory(operand: number): void {
     this._memory -= operand;
+    console.log("subtract");
   }
 
   recallFromMemory() {
