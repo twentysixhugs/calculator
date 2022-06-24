@@ -5,8 +5,10 @@ import {
 } from "../../interfaces/Command.interface";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
-import { updateDisplay } from "../display";
+import { showError, updateDisplay } from "../display";
 import { calculator } from "../../Calculator";
+import { isCalculationError } from "../helpers";
+import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
 
 export function initImmediateOperation(
   selector: ImmediateOperations,
@@ -27,7 +29,14 @@ export function initImmediateOperation(
 
     if (expressionHasLeftOperand && !expressionHasOperator) {
       // expression: "2", command is applied to "2"
-      new ImmediateCommand(calculator, "left").execute();
+      try {
+        new ImmediateCommand(calculator, "left").execute();
+      } catch (err) {
+        if (isCalculationError(err)) {
+          showError(err.message);
+          new ShowCalculationResultCommand(calculator, 0).execute();
+        }
+      }
       updateDisplay();
     }
 
@@ -41,10 +50,18 @@ export function initImmediateOperation(
       expressionHasRightOperand &&
       CurrentCommand
     ) {
-      if (new CurrentCommand(calculator).execute()) {
-        new ImmediateCommand(calculator, "left").execute();
-        updateDisplay();
+      try {
+        if (new CurrentCommand(calculator).execute()) {
+          new ImmediateCommand(calculator, "left").execute();
+        }
+      } catch (err) {
+        if (isCalculationError(err)) {
+          showError(err.message);
+
+          new ShowCalculationResultCommand(calculator, 0);
+        }
       }
+      updateDisplay();
     }
   });
 }
