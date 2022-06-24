@@ -205,6 +205,7 @@ body,
   }
 
   &__errors {
+    opacity: 0;
     min-height: 1rem;
     width: 100%;
 
@@ -213,6 +214,12 @@ body,
     text-align: end;
     font-size: 0.9rem;
     line-height: 1;
+
+    &.is-visible {
+      opacity: 1;
+    }
+
+    transition: opacity 1s ease-out;
   }
 
   @media (max-device-width: 1000px) and (orientation: landscape) {

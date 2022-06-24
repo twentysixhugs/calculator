@@ -3,6 +3,8 @@ import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
 import { updateDisplay } from "../display";
+import { isCalculationError } from "../helpers";
+import { showError } from "../display";
 
 export function initEquals() {
   const equalsButton = document.querySelector(
@@ -25,12 +27,20 @@ export function initEquals() {
       expressionOperator &&
       CurrentCommand
     ) {
-      const result = new CurrentCommand(calculator).execute();
+      try {
+        const result = new CurrentCommand(calculator).execute();
 
-      if (result !== null && typeof result === "number") {
-        console.log("called");
-        new ShowCalculationResultCommand(calculator, result).execute();
+        if (result !== null && typeof result === "number") {
+          new ShowCalculationResultCommand(calculator, result).execute();
+          updateDisplay();
+        }
+      } catch (err) {
+        new ShowCalculationResultCommand(calculator, 0).execute();
         updateDisplay();
+
+        if (isCalculationError(err)) {
+          showError(err.message);
+        }
       }
     }
   });

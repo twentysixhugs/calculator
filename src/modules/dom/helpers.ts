@@ -1,4 +1,4 @@
-import { Operator } from "../constants";
+import { CalculationError, Operator } from "../constants";
 
 export function isOperatorAssignable(
   arg: string | undefined | null
@@ -10,6 +10,26 @@ export function isOperatorAssignable(
   if (
     arg === null ||
     Object.values(Operator).includes(arg as unknown as Operator)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+type CalculationErrorType = Error & {
+  message: CalculationError;
+};
+
+export function isCalculationError(arg: unknown): arg is CalculationErrorType {
+  if (
+    arg &&
+    typeof arg === "object" &&
+    "name" in arg &&
+    "message" in arg &&
+    Object.values(CalculationError).includes(
+      (arg as Error).message as unknown as CalculationError
+    )
   ) {
     return true;
   }

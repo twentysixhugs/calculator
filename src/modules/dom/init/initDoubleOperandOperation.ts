@@ -1,4 +1,5 @@
 import {
+  CalculationError,
   DoubleOperandOperations,
   Operator,
   OperatorCharacters,
@@ -8,10 +9,10 @@ import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { SetOperatorCommand } from "../../commands/Expression/SetOperatorCommand";
 
-import { updateDisplay } from "../display";
+import { showError, updateDisplay } from "../display";
 import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
-import { isOperatorAssignable } from "../helpers";
+import { isCalculationError, isOperatorAssignable } from "../helpers";
 import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
 
 export function initDoubleOperandOperation(
@@ -95,17 +96,26 @@ export function initDoubleOperandOperation(
       expressionHasRightOperand &&
       CurrentCommand
     ) {
-      const result = new CurrentCommand(calculator).execute();
+      try {
+        const result = new CurrentCommand(calculator).execute();
 
-      if (result !== null && typeof result === "number") {
-        new ShowCalculationResultCommand(calculator, result).execute();
+        if (result !== null && typeof result === "number") {
+          new ShowCalculationResultCommand(calculator, result).execute();
 
-        canAssignOperator &&
-          new SetOperatorCommand(calculator, receivedOperator).execute();
+          canAssignOperator &&
+            new SetOperatorCommand(calculator, receivedOperator).execute();
 
-        calculator.CurrentCommand = Command;
+          calculator.CurrentCommand = Command;
 
+          updateDisplay();
+        }
+      } catch (err) {
+        new ShowCalculationResultCommand(calculator, 0).execute();
         updateDisplay();
+
+        if (isCalculationError(err)) {
+          showError(err.message);
+        }
       }
     }
   });
