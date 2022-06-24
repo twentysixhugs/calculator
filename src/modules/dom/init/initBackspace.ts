@@ -22,16 +22,19 @@ export function initBackspace() {
     if (expressionHasLeft && operator && expressionHasRight) {
       new EraseOperandFromEndCommand(calculator, "right").execute();
       updateDisplay();
+      return;
     }
 
     if (expressionHasLeft && !operator) {
       new EraseOperandFromEndCommand(calculator, "left").execute();
       updateDisplay();
+      return;
     }
 
     if (expressionHasLeft && operator) {
       new EraseOperatorCommand(calculator).execute();
       updateDisplay();
+      return;
     }
   });
 }
