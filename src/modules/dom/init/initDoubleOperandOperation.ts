@@ -8,6 +8,7 @@ import { CommandConstructor } from "../../interfaces/Command.interface";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { SetOperatorCommand } from "../../commands/Expression/SetOperatorCommand";
+import { InterpretAsCommand } from "../../commands/Expression/InterpretAsCommand";
 
 import { showError, updateDisplay } from "../display";
 import { appendDisplay } from "../display";

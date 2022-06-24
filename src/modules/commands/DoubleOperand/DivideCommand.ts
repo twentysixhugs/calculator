@@ -19,6 +19,8 @@ export class DivideCommand implements ICommand {
 
     const result = this.calculator.divide(left, right);
 
+    this.calculator.resetDecimalZeros();
+
     return result;
   }
 }

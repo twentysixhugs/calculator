@@ -15,7 +15,7 @@ export function updateDisplay() {
 }
 
 export function appendDisplay(value: string) {
-  if (inputOutput.textContent === "0") {
+  if (inputOutput.textContent === "0" && value !== ".") {
     inputOutput.textContent = value;
   } else {
     inputOutput.textContent += value;

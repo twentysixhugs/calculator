@@ -2,9 +2,15 @@ import { Operator } from "../constants";
 import { IExpression } from "./Expression.interface";
 import { CommandConstructor } from "./Command.interface";
 
+export interface IDecimalPointState {
+  left: boolean;
+  right: boolean;
+}
+
 export interface ICalculator {
   shouldChangeNextOperatorSign: boolean;
   CurrentCommand: CommandConstructor | null;
+  decimalPointState: IDecimalPointState;
 
   setOperand(operandPosition: "left" | "right", value: number | null): boolean;
 
@@ -15,6 +21,19 @@ export interface ICalculator {
   setOperator(operator: Operator | null): boolean;
 
   getExpression(): IExpression;
+
+  setDecimalPointState(
+    value: boolean,
+    position: keyof IDecimalPointState
+  ): void;
+
+  getDecimalZeros(): number;
+
+  decrementDecimalZeros(): void;
+
+  incrementDecimalZeros(): void;
+
+  resetDecimalZeros(): void;
 
   add(a: number, b: number): number;
 

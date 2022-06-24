@@ -8,5 +8,12 @@ export class ShowCalculationResultCommand implements ICommand {
     this.calculator.setOperand("left", this.result);
     this.calculator.setOperator(null);
     this.calculator.setOperand("right", null);
+
+    if (!this.result.toString().includes(".")) {
+      // if result is a whole number
+      this.calculator.setDecimalPointState(false, "left");
+    }
+
+    this.calculator.setDecimalPointState(false, "right");
   }
 }

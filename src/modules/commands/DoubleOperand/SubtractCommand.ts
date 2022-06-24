@@ -14,6 +14,8 @@ export class SubtractCommand implements ICommand {
 
     const result = this.calculator.subtract(left, right);
 
+    this.calculator.resetDecimalZeros();
+
     return result;
   }
 }

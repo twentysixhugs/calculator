@@ -14,6 +14,8 @@ export class RootCommand implements ICommand {
 
     const result = this.calculator.root(left, right);
 
+    this.calculator.resetDecimalZeros();
+
     return result;
   }
 }
