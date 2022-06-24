@@ -15,6 +15,7 @@ import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
 import { isCalculationError, isOperatorAssignable } from "../helpers";
 import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
+import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -62,7 +63,7 @@ export function initDoubleOperandOperation(
         !rightOperand &&
         receivedOperator === Operator.Subtract
       ) {
-        calculator.shouldChangeNextOperatorSign = true;
+        new ShouldChangeNextOperatorSignCommand(calculator, true).execute();
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
@@ -79,7 +80,7 @@ export function initDoubleOperandOperation(
     // then make sure the left operand will be saved as negative and display minus
     if (!expressionHasLeftOperand) {
       if (receivedOperator === Operator.Subtract) {
-        calculator.shouldChangeNextOperatorSign = true;
+        new ShouldChangeNextOperatorSignCommand(calculator, true).execute();
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
