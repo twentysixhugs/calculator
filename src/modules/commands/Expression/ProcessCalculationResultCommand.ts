@@ -1,5 +1,6 @@
 import { ICommand } from "../../interfaces/Command.interface";
 import { ICalculator } from "../../interfaces/Calculator.interface";
+import { InterpretAsCommand } from "./InterpretAsCommand";
 
 export class ProcessCalculationResultCommand implements ICommand {
   constructor(private calculator: ICalculator, private result: number) {}
@@ -11,9 +12,11 @@ export class ProcessCalculationResultCommand implements ICommand {
 
     if (!this.result.toString().includes(".")) {
       // if result is a whole number
-      this.calculator.setDecimalPointState(false, "left");
+      new InterpretAsCommand(this.calculator, "left", "whole").execute();
+    } else {
+      new InterpretAsCommand(this.calculator, "left", "decimal").execute();
     }
 
-    this.calculator.setDecimalPointState(false, "right");
+    new InterpretAsCommand(this.calculator, "right", "whole");
   }
 }

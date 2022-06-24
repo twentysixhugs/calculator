@@ -13,9 +13,12 @@ export class InterpretAsCommand {
   execute() {
     if (this.interpretAs === "whole") {
       this.calculator.setDecimalPointState(false, this.operandPosition);
+      return;
     }
     if (this.interpretAs === "decimal") {
       this.calculator.setDecimalPointState(true, this.operandPosition);
+
+      return;
     }
   }
 }

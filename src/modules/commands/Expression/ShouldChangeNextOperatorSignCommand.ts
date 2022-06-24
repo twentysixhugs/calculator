@@ -1,6 +1,7 @@
 import { ICalculator } from "../../interfaces/Calculator.interface";
+import { ICommand } from "../../interfaces/Command.interface";
 
-export class ShouldChangeNextOperatorSignCommand {
+export class ShouldChangeNextOperatorSignCommand implements ICommand {
   constructor(private calculator: ICalculator, private changeTo?: boolean) {}
 
   execute() {

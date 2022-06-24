@@ -47,6 +47,8 @@ class Calculator implements ICalculator {
       ...this._decimalPointState,
       [position]: value,
     };
+
+    console.log(this._decimalPointState);
   }
 
   incrementDecimalZeros() {

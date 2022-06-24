@@ -8,8 +8,7 @@ import { CommandConstructor } from "../../interfaces/Command.interface";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { SetOperatorCommand } from "../../commands/Expression/SetOperatorCommand";
-import { InterpretAsCommand } from "../../commands/Expression/InterpretAsCommand";
-
+import { IsDecimalPointCommand } from "../../commands/Expression/IsDecimalPointCommand";
 import { showError, updateDisplay } from "../display";
 import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
@@ -27,6 +26,23 @@ export function initDoubleOperandOperation(
     const target = e.target as HTMLButtonElement;
     const leftOperand = new GetOperandCommand(calculator, "left").execute();
     const rightOperand = new GetOperandCommand(calculator, "right").execute();
+
+    const leftHasDecimal = new IsDecimalPointCommand(
+      calculator,
+      "left"
+    ).execute();
+    const rightHasDecimal = new IsDecimalPointCommand(
+      calculator,
+      "right"
+    ).execute();
+
+    if (leftHasDecimal && !leftOperand?.toString().includes(".")) {
+      return;
+    }
+
+    if (rightHasDecimal && !rightOperand?.toString().includes(".")) {
+      return;
+    }
 
     const expressionHasLeftOperand = leftOperand !== null;
     const expressionHasRightOperand = rightOperand !== null;
