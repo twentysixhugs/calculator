@@ -44,3 +44,8 @@ export enum MemoryOperation {
   Clear = ".js-mc",
   Recall = ".js-mr",
 }
+
+export enum CalculationError {
+  DivisionByZero = "Error: Division by zero",
+  OutOfRange = "Error: Expression is out of range",
+}
