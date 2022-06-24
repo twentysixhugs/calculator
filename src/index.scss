@@ -181,6 +181,7 @@ body,
 
 .display {
   display: flex;
+  flex-flow: column;
   justify-content: flex-end;
   align-items: flex-end;
 
@@ -201,6 +202,17 @@ body,
     color: var(--highlight-text);
 
     outline: none !important;
+  }
+
+  &__errors {
+    min-height: 1rem;
+    width: 100%;
+
+    color: rgb(255, 31, 31);
+
+    text-align: end;
+    font-size: 0.9rem;
+    line-height: 1;
   }
 
   @media (max-device-width: 1000px) and (orientation: landscape) {
