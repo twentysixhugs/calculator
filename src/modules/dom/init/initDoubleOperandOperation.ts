@@ -14,7 +14,7 @@ import { showError, updateDisplay } from "../display";
 import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
 import { isCalculationError, isOperatorAssignable } from "../helpers";
-import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
+import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -101,7 +101,7 @@ export function initDoubleOperandOperation(
         const result = new CurrentCommand(calculator).execute();
 
         if (result !== null && typeof result === "number") {
-          new ShowCalculationResultCommand(calculator, result).execute();
+          new ProcessCalculationResultCommand(calculator, result).execute();
 
           canAssignOperator &&
             new SetOperatorCommand(calculator, receivedOperator).execute();
@@ -111,7 +111,7 @@ export function initDoubleOperandOperation(
           updateDisplay();
         }
       } catch (err) {
-        new ShowCalculationResultCommand(calculator, 0).execute();
+        new ProcessCalculationResultCommand(calculator, 0).execute();
         updateDisplay();
 
         if (isCalculationError(err)) {

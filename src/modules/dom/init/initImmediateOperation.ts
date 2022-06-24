@@ -8,7 +8,7 @@ import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand
 import { showError, updateDisplay } from "../display";
 import { calculator } from "../../Calculator";
 import { isCalculationError } from "../helpers";
-import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
+import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
 
 export function initImmediateOperation(
   selector: ImmediateOperations,
@@ -42,7 +42,7 @@ export function initImmediateOperation(
       } catch (err) {
         if (isCalculationError(err)) {
           showError(err.message);
-          new ShowCalculationResultCommand(calculator, 0).execute();
+          new ProcessCalculationResultCommand(calculator, 0).execute();
         }
       }
       updateDisplay();
@@ -69,14 +69,14 @@ export function initImmediateOperation(
       try {
         const result = new CurrentCommand(calculator).execute();
         if (result !== null && typeof result === "number") {
-          new ShowCalculationResultCommand(calculator, result).execute();
+          new ProcessCalculationResultCommand(calculator, result).execute();
           new ImmediateCommand(calculator, "left").execute();
         }
       } catch (err) {
         if (isCalculationError(err)) {
           showError(err.message);
 
-          new ShowCalculationResultCommand(calculator, 0);
+          new ProcessCalculationResultCommand(calculator, 0);
         }
       }
       updateDisplay();
