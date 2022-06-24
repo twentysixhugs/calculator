@@ -5,8 +5,10 @@ import {
 } from "../../interfaces/Command.interface";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
-import { updateDisplay } from "../display";
+import { showError, updateDisplay } from "../display";
 import { calculator } from "../../Calculator";
+import { isCalculationError } from "../helpers";
+import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
 
 export function initImmediateOperation(
   selector: ImmediateOperations,
@@ -26,8 +28,23 @@ export function initImmediateOperation(
     ).execute();
 
     if (expressionHasLeftOperand && !expressionHasOperator) {
+      // if it looks like "2." (with decimal point at the end), don't execute
+      if (
+        calculator.decimalPointState.left &&
+        !leftOperand.toString().includes(".")
+      ) {
+        return;
+      }
+
       // expression: "2", command is applied to "2"
-      new ImmediateCommand(calculator, "left").execute();
+      try {
+        new ImmediateCommand(calculator, "left").execute();
+      } catch (err) {
+        if (isCalculationError(err)) {
+          showError(err.message);
+          new ProcessCalculationResultCommand(calculator, 0).execute();
+        }
+      }
       updateDisplay();
     }
 
@@ -41,10 +58,28 @@ export function initImmediateOperation(
       expressionHasRightOperand &&
       CurrentCommand
     ) {
-      if (new CurrentCommand(calculator).execute()) {
-        new ImmediateCommand(calculator, "left").execute();
-        updateDisplay();
+      // if it looks like "2+3." (with decimal point at the end), don't execute
+      if (
+        calculator.decimalPointState.right &&
+        !rightOperand.toString().includes(".")
+      ) {
+        return;
       }
+
+      try {
+        const result = new CurrentCommand(calculator).execute();
+        if (result !== null && typeof result === "number") {
+          new ProcessCalculationResultCommand(calculator, result).execute();
+          new ImmediateCommand(calculator, "left").execute();
+        }
+      } catch (err) {
+        if (isCalculationError(err)) {
+          showError(err.message);
+
+          new ProcessCalculationResultCommand(calculator, 0);
+        }
+      }
+      updateDisplay();
     }
   });
 }

@@ -14,6 +14,8 @@ export class AddCommand implements ICommand {
 
     const result = this.calculator.add(left, right);
 
+    this.calculator.resetDecimalZeros();
+
     return result;
   }
 }

@@ -14,6 +14,8 @@ export class MultiplyCommand implements ICommand {
 
     const result = this.calculator.multiply(left, right);
 
+    this.calculator.resetDecimalZeros();
+
     return result;
   }
 }

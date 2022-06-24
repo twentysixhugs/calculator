@@ -1,4 +1,5 @@
 import {
+  CalculationError,
   DoubleOperandOperations,
   Operator,
   OperatorCharacters,
@@ -7,12 +8,13 @@ import { CommandConstructor } from "../../interfaces/Command.interface";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { SetOperatorCommand } from "../../commands/Expression/SetOperatorCommand";
-
-import { updateDisplay } from "../display";
+import { IsDecimalPointCommand } from "../../commands/Expression/IsDecimalPointCommand";
+import { showError, updateDisplay } from "../display";
 import { appendDisplay } from "../display";
 import { calculator } from "../../Calculator";
-import { isOperatorAssignable } from "../helpers";
-import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
+import { isCalculationError, isOperatorAssignable } from "../helpers";
+import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
+import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -24,6 +26,23 @@ export function initDoubleOperandOperation(
     const target = e.target as HTMLButtonElement;
     const leftOperand = new GetOperandCommand(calculator, "left").execute();
     const rightOperand = new GetOperandCommand(calculator, "right").execute();
+
+    const leftHasDecimal = new IsDecimalPointCommand(
+      calculator,
+      "left"
+    ).execute();
+    const rightHasDecimal = new IsDecimalPointCommand(
+      calculator,
+      "right"
+    ).execute();
+
+    if (leftHasDecimal && !leftOperand?.toString().includes(".")) {
+      return;
+    }
+
+    if (rightHasDecimal && !rightOperand?.toString().includes(".")) {
+      return;
+    }
 
     const expressionHasLeftOperand = leftOperand !== null;
     const expressionHasRightOperand = rightOperand !== null;
@@ -60,7 +79,7 @@ export function initDoubleOperandOperation(
         !rightOperand &&
         receivedOperator === Operator.Subtract
       ) {
-        calculator.shouldChangeNextOperatorSign = true;
+        new ShouldChangeNextOperatorSignCommand(calculator, true).execute();
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
@@ -77,7 +96,7 @@ export function initDoubleOperandOperation(
     // then make sure the left operand will be saved as negative and display minus
     if (!expressionHasLeftOperand) {
       if (receivedOperator === Operator.Subtract) {
-        calculator.shouldChangeNextOperatorSign = true;
+        new ShouldChangeNextOperatorSignCommand(calculator, true).execute();
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
@@ -95,17 +114,26 @@ export function initDoubleOperandOperation(
       expressionHasRightOperand &&
       CurrentCommand
     ) {
-      const result = new CurrentCommand(calculator).execute();
+      try {
+        const result = new CurrentCommand(calculator).execute();
 
-      if (result !== null && typeof result === "number") {
-        new ShowCalculationResultCommand(calculator, result).execute();
+        if (result !== null && typeof result === "number") {
+          new ProcessCalculationResultCommand(calculator, result).execute();
 
-        canAssignOperator &&
-          new SetOperatorCommand(calculator, receivedOperator).execute();
+          canAssignOperator &&
+            new SetOperatorCommand(calculator, receivedOperator).execute();
 
-        calculator.CurrentCommand = Command;
+          calculator.CurrentCommand = Command;
 
+          updateDisplay();
+        }
+      } catch (err) {
+        new ProcessCalculationResultCommand(calculator, 0).execute();
         updateDisplay();
+
+        if (isCalculationError(err)) {
+          showError(err.message);
+        }
       }
     }
   });

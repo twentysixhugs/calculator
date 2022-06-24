@@ -12,7 +12,10 @@ export class FactorialCommand implements ICommand {
     if (operand === null) return false;
 
     const result = this.calculator.factorial(operand);
-    this.calculator.setOperand(this.operandPosition, result);
+    this.calculator.setOperand(
+      this.operandPosition,
+      parseFloat(result.toFixed(5))
+    );
 
     return true;
   }

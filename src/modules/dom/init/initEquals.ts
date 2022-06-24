@@ -1,19 +1,33 @@
 import { calculator } from "../../Calculator";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
-import { ShowCalculationResultCommand } from "../../commands/Expression/ShowCalculationResultCommand";
+import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
+import { IsDecimalPointCommand } from "../../commands/Expression/IsDecimalPointCommand";
 import { updateDisplay } from "../display";
+import { isCalculationError } from "../helpers";
+import { showError } from "../display";
 
 export function initEquals() {
   const equalsButton = document.querySelector(
     ".js-equals"
   ) as HTMLButtonElement;
   equalsButton.addEventListener("click", (e) => {
-    const expressionHasLeftOperand =
-      new GetOperandCommand(calculator, "left") !== null;
+    const left = new GetOperandCommand(calculator, "left").execute();
 
-    const expressionHasRightOperand =
-      new GetOperandCommand(calculator, "right") !== null;
+    const right = new GetOperandCommand(calculator, "right").execute();
+
+    const rightHasDecimal = new IsDecimalPointCommand(
+      calculator,
+      "right"
+    ).execute();
+
+    if (rightHasDecimal && !right?.toString().includes(".")) {
+      return;
+    }
+
+    const expressionHasLeftOperand = left !== null;
+
+    const expressionHasRightOperand = right !== null;
 
     const expressionOperator = new GetOperatorCommand(calculator).execute();
 
@@ -25,12 +39,20 @@ export function initEquals() {
       expressionOperator &&
       CurrentCommand
     ) {
-      const result = new CurrentCommand(calculator).execute();
+      try {
+        const result = new CurrentCommand(calculator).execute();
 
-      if (result !== null && typeof result === "number") {
-        console.log("called");
-        new ShowCalculationResultCommand(calculator, result).execute();
+        if (result !== null && typeof result === "number") {
+          new ProcessCalculationResultCommand(calculator, result).execute();
+          updateDisplay();
+        }
+      } catch (err) {
+        new ProcessCalculationResultCommand(calculator, 0).execute();
         updateDisplay();
+
+        if (isCalculationError(err)) {
+          showError(err.message);
+        }
       }
     }
   });

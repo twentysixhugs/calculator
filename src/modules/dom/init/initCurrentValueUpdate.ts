@@ -4,6 +4,7 @@ import { AppendOperandCommand } from "../../commands/Expression/AppendOperandCom
 import { updateDisplay } from "../display";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { initEquals } from "./initEquals";
+import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
 
 export function initCurrentValueUpdate() {
   // Appends current value when clicking on 0-9
@@ -15,9 +16,9 @@ export function initCurrentValueUpdate() {
 
       let number;
 
-      if (calculator.shouldChangeNextOperatorSign) {
+      if (new ShouldChangeNextOperatorSignCommand(calculator).execute()) {
         number = -Number(target.dataset.number);
-        calculator.shouldChangeNextOperatorSign = false;
+        new ShouldChangeNextOperatorSignCommand(calculator, false).execute();
       } else {
         number = Number(target.dataset.number);
       }

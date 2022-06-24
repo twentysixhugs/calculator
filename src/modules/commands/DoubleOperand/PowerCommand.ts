@@ -14,6 +14,8 @@ export class PowerCommand implements ICommand {
 
     const result = this.calculator.power(left, right);
 
+    this.calculator.resetDecimalZeros();
+
     return result;
   }
 }

@@ -1,5 +1,6 @@
 import { ICommand } from "../../interfaces/Command.interface";
 import { ICalculator } from "../../interfaces/Calculator.interface";
+import { CalculationError } from "../../constants";
 
 export class DivideCommand implements ICommand {
   constructor(private calculator: ICalculator) {}
@@ -8,11 +9,17 @@ export class DivideCommand implements ICommand {
     const left = this.calculator.getOperand("left");
     const right = this.calculator.getOperand("right");
 
-    if (left === null || right === null || right === 0) {
+    if (left === null || right === null) {
       return null;
     }
 
+    if (right === 0) {
+      throw new Error(CalculationError.DivisionByZero);
+    }
+
     const result = this.calculator.divide(left, right);
+
+    this.calculator.resetDecimalZeros();
 
     return result;
   }

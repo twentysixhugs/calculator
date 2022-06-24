@@ -12,7 +12,10 @@ export class PowerOfThreeCommand implements ICommand {
     if (operand === null) return false;
 
     const result = this.calculator.power(operand, 3);
-    this.calculator.setOperand(this.operandPosition, result);
+    this.calculator.setOperand(
+      this.operandPosition,
+      parseFloat(result.toFixed(5))
+    );
 
     return true;
   }

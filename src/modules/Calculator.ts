@@ -1,7 +1,10 @@
 /* Receiver */
 
 import { Operator } from "./constants";
-import { ICalculator } from "./interfaces/Calculator.interface";
+import {
+  ICalculator,
+  IDecimalPointState,
+} from "./interfaces/Calculator.interface";
 
 import { IExpression } from "./interfaces/Expression.interface";
 import { Expression } from "./Expression";
@@ -26,6 +29,44 @@ class Calculator implements ICalculator {
 
   set shouldChangeNextOperatorSign(value: boolean) {
     this._shouldChangeNextOperatorSign = value;
+  }
+
+  private _decimalPointState: IDecimalPointState = {
+    left: false,
+    right: false,
+  };
+
+  private _decimalZerosCount = 0;
+
+  get decimalPointState(): IDecimalPointState {
+    return { ...this._decimalPointState };
+  }
+
+  setDecimalPointState(value: boolean, position: "left" | "right") {
+    this._decimalPointState = {
+      ...this._decimalPointState,
+      [position]: value,
+    };
+
+    console.log(this._decimalPointState);
+  }
+
+  incrementDecimalZeros() {
+    this._decimalZerosCount++;
+  }
+
+  decrementDecimalZeros() {
+    if (!this._decimalZerosCount) return;
+
+    this._decimalZerosCount--;
+  }
+
+  getDecimalZeros() {
+    return this._decimalZerosCount;
+  }
+
+  resetDecimalZeros() {
+    this._decimalZerosCount = 0;
   }
 
   private _memory = 0;
