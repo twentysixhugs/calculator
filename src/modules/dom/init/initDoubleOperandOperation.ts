@@ -17,6 +17,7 @@ import { ProcessCalculationResultCommand } from "../../commands/Expression/Proce
 import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
 import { getDisplayValue } from "../display";
 import { SetDecimalZerosCommand } from "../../commands/Expression/SetDecimalZerosCommand";
+import { InterpretAsCommand } from "../../commands/Expression/InterpretAsCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -69,6 +70,11 @@ export function initDoubleOperandOperation(
         if (canAssignOperator) {
           new SetOperatorCommand(calculator, receivedOperator).execute();
           new SetDecimalZerosCommand(calculator, 0).execute();
+        }
+
+        if (!leftOperand.toString().includes(".")) {
+          new InterpretAsCommand(calculator, "left", "whole").execute();
+          // Prevent "5.+", "0.+" etc.
         }
 
         updateDisplay();
