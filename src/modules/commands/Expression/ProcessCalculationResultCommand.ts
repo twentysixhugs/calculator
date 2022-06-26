@@ -1,12 +1,33 @@
 import { ICommand } from "../../interfaces/Command.interface";
 import { ICalculator } from "../../interfaces/Calculator.interface";
 import { InterpretAsCommand } from "./InterpretAsCommand";
+import { CalculationError } from "../../constants";
 
 export class ProcessCalculationResultCommand implements ICommand {
   constructor(private calculator: ICalculator, private result: number) {}
 
   execute() {
-    this.calculator.setOperand("left", parseFloat(this.result.toFixed(5)));
+    console.log(this.result);
+
+    let fixedResult = this.result.toFixed(5);
+
+    if (
+      fixedResult.toString().includes(".") &&
+      fixedResult.toString().replace(".", "").length > 8
+    ) {
+      fixedResult = this.result.toFixed(1);
+    }
+
+    if (
+      (!fixedResult.toString().includes(".") &&
+        fixedResult.toString().length > 8) ||
+      (fixedResult.toString().includes(".") &&
+        fixedResult.toString().length > 10)
+    ) {
+      throw new Error(CalculationError.OutOfRange);
+    }
+
+    this.calculator.setOperand("left", parseFloat(fixedResult));
     this.calculator.setOperator(null);
     this.calculator.setOperand("right", null);
 
