@@ -253,6 +253,7 @@ body,
   @media (max-device-width: 1000px) and (orientation: landscape) {
     flex-flow: row;
     justify-content: space-around;
+    gap: 2rem;
   }
 
   @media (max-device-height: 350px) and (orientation: landscape) {
@@ -313,33 +314,13 @@ body,
 
   &--middle {
     $gap: 1.75rem;
+    $landscape-column-gap: 2.9rem;
 
     position: relative;
 
     @include buttons-flex-centered(column, $gap, var(--middle-gap));
     @include outer-wrapper($gap, column);
     @include inner-wrapper($gap);
-
-    @media (max-device-width: 1000px) and (orientation: landscape) {
-      flex-flow: row-reverse;
-
-      & .wrapper--powers {
-        flex-flow: column !important;
-        gap: $gap !important;
-      }
-
-      .btn {
-        position: relative;
-
-        &--equals {
-          left: calc(var(--middle-gap) + 1.8rem);
-        }
-
-        &--divide {
-          right: calc(var(--middle-gap) + 1.8rem);
-        }
-      }
-    }
 
     @media (min-width: 1000px) {
       & .line {
@@ -364,6 +345,31 @@ body,
       $gap: 0.5rem;
       @include outer-wrapper($gap, column);
       @include inner-wrapper($gap, row, space-between);
+    }
+
+    @media (max-device-width: 1000px) and (orientation: landscape) {
+      flex-flow: row-reverse;
+      $gap: 1.2rem;
+
+      @include outer-wrapper($landscape-column-gap, column);
+      @include inner-wrapper($gap, row, space-between);
+
+      & .wrapper--powers {
+        flex-flow: column !important;
+        gap: $landscape-column-gap !important;
+      }
+
+      .btn {
+        position: relative;
+
+        &--equals {
+          left: calc(var(--middle-gap) + $gap);
+        }
+
+        &--divide {
+          right: calc(var(--middle-gap) + $gap);
+        }
+      }
     }
   }
 
