@@ -1,0 +1,53 @@
+.phone-container {
+  --highlight-background: #f7d6df;
+  --main-background: #fff;
+  --buttons-background: #fdfafa;
+  --design-button-background: #fff;
+  --line-background: rgb(235, 235, 235);
+  --speaker-camera: #f1f1f1;
+  --camera-background: linear-gradient(180deg, #94a6ae 0%, #b4cad4 100%);
+  --non-highlight-button-active: rgb(231, 231, 231);
+
+  --highlight-button-shadow: rgba(195, 45, 85, 0.4) 4px 5px 5px;
+  --equals-button-shadow: rgba(91, 132, 176, 0.4) 4px 5px 5px;
+
+  --phone-border: rgb(244, 244, 244);
+  --border-radius: 16px;
+
+  --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+  --font: 17px "Poppins", var(--system-font);
+  --icon-button: 17px;
+
+  --highlight-text: rgb(79, 56, 62);
+  --highlight-button-text: #e26a8d;
+  --non-highlight-button-text: rgb(49, 49, 49);
+
+  --padding: 1.3rem;
+  --middle-gap: 2.5rem;
+
+  --top-bar-element-color: #000;
+
+  &.is-dark-theme {
+    --main-background: rgb(45, 49, 58);
+    --buttons-background: rgb(43, 47, 56);
+    --design-button-background: rgb(45, 49, 58);
+    --phone-border: rgb(61, 65, 78);
+    --line-background: rgb(55, 59, 68);
+    --speaker-camera: rgb(55, 59, 68);
+    --camera-background: linear-gradient(180deg, #151618 0%, #343a3d 100%);
+    --non-highlight-button-active: rgb(68, 74, 89);
+
+    --highlight-background: rgb(219, 66, 114);
+    --highlight-button-shadow: rgba(32, 32, 32, 0.631) 4px 5px 5px;
+
+    --equals-button-shadow: rgb(32, 32, 32, 0.631) 4px 5px 5px;
+
+    --non-highlight-button-text: rgba(199, 199, 199, 0.961);
+    --highlight-button-text: #e7cad2;
+    --highlight-text: rgb(240, 69, 117);
+
+    --top-bar-element-color: rgb(212, 212, 212);
+  }
+}
