@@ -1,0 +1,20 @@
+@use "./variables";
+
+body,
+.root {
+  min-height: 100vh;
+  background: #f9c2d2;
+}
+
+.root {
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 1000px) {
+    align-items: center;
+  }
+}
+
+svg {
+  margin: 0 !important;
+}

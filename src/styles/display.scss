@@ -1,0 +1,48 @@
+.display {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+
+  align-self: center;
+
+  width: 100%;
+  min-height: 100px;
+  max-width: calc(var(--middle-gap) * 4 + 1rem * 3 + var(--padding) * 2 - 2px);
+  padding-bottom: calc(var(--padding) * 1.5);
+
+  &__input-output {
+    width: 100%;
+    min-height: 3rem;
+
+    font-size: 2rem;
+    text-align: right;
+
+    color: var(--highlight-text);
+
+    outline: none !important;
+  }
+
+  &__errors {
+    opacity: 0;
+    min-height: 1rem;
+    width: 100%;
+
+    color: rgb(255, 31, 31);
+
+    &.is-visible {
+      opacity: 1;
+    }
+
+    transition: opacity 1s ease-out;
+  }
+
+  @media (max-device-width: 1000px) and (orientation: landscape) {
+    min-height: 50px;
+    max-width: unset;
+  }
+
+  @media (max-width: 500px) {
+    padding-bottom: calc(var(--padding) * 1);
+  }
+}
