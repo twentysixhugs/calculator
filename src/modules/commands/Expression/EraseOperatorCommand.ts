@@ -6,7 +6,11 @@ export class EraseOperatorCommand implements ICommand {
 
   execute() {
     if (this.calculator.getOperator()) {
-      this.calculator.setOperator(null);
+      if (this.calculator.shouldChangeNextOperatorSign) {
+        this.calculator.shouldChangeNextOperatorSign = false;
+      } else {
+        this.calculator.setOperator(null);
+      }
     }
   }
 }

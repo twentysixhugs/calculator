@@ -1,5 +1,6 @@
 import { ICommand } from "../../interfaces/Command.interface";
 import { ICalculator } from "../../interfaces/Calculator.interface";
+import { OperatorCharacters } from "../../constants";
 
 export class EraseOperandFromEndCommand implements ICommand {
   constructor(
@@ -28,6 +29,12 @@ export class EraseOperandFromEndCommand implements ICommand {
         const valueToSet = this.operandPosition === "left" ? 0 : null;
 
         this.calculator.setOperand(this.operandPosition, valueToSet);
+      } else if (
+        operandAfterErase === OperatorCharacters.SubtractJSConverted &&
+        this.operandPosition === "right"
+      ) {
+        this.calculator.shouldChangeNextOperatorSign = true;
+        this.calculator.setOperand(this.operandPosition, null);
       } else {
         this.calculator.setOperand(this.operandPosition, +operandAfterErase);
       }
