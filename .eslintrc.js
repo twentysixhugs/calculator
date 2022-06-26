@@ -12,6 +12,6 @@ module.exports = {
   },
   plugins: ["@typescript-eslint"],
   rules: {
-    "prefer-const": "warning",
+    "prefer-const": 1,
   },
 };
