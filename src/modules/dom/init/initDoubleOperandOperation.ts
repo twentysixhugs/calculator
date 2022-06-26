@@ -15,6 +15,9 @@ import { calculator } from "../../Calculator";
 import { isCalculationError, isOperatorAssignable } from "../helpers";
 import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
 import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
+import { getDisplayValue } from "../display";
+import { SetDecimalZerosCommand } from "../../commands/Expression/SetDecimalZerosCommand";
+import { InterpretAsCommand } from "../../commands/Expression/InterpretAsCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -36,11 +39,17 @@ export function initDoubleOperandOperation(
       "right"
     ).execute();
 
-    if (leftHasDecimal && !leftOperand?.toString().includes(".")) {
+    const displayValue = getDisplayValue();
+
+    if (!displayValue) return;
+
+    const lastCharOnDisplay = displayValue[displayValue.length - 1];
+
+    if (leftHasDecimal && lastCharOnDisplay === ".") {
       return;
     }
 
-    if (rightHasDecimal && !rightOperand?.toString().includes(".")) {
+    if (rightHasDecimal && lastCharOnDisplay === ".") {
       return;
     }
 
@@ -58,8 +67,16 @@ export function initDoubleOperandOperation(
     if (expressionHasLeftOperand) {
       // If there's no right operand and operator, save input to operator
       if (!expressionHasRightOperand && !expressionHasOperator) {
-        canAssignOperator &&
+        if (canAssignOperator) {
           new SetOperatorCommand(calculator, receivedOperator).execute();
+          new SetDecimalZerosCommand(calculator, 0).execute();
+        }
+
+        if (!leftOperand.toString().includes(".")) {
+          new InterpretAsCommand(calculator, "left", "whole").execute();
+          // Prevent "5.+", "0.+" etc.
+        }
+
         updateDisplay();
 
         calculator.CurrentCommand = Command;
@@ -76,7 +93,6 @@ export function initDoubleOperandOperation(
       if (
         expressionHasOperator &&
         !expressionHasRightOperand &&
-        !rightOperand &&
         receivedOperator === Operator.Subtract
       ) {
         new ShouldChangeNextOperatorSignCommand(calculator, true).execute();
@@ -90,6 +106,25 @@ export function initDoubleOperandOperation(
 
         return;
       }
+    }
+
+    if (expressionHasOperator && !expressionHasRightOperand) {
+      if (canAssignOperator) {
+        new SetOperatorCommand(calculator, receivedOperator).execute();
+        new SetDecimalZerosCommand(calculator, 0).execute();
+      }
+
+      calculator.CurrentCommand = Command;
+
+      new ShouldChangeNextOperatorSignCommand(calculator, false).execute();
+
+      updateDisplay();
+
+      console.log("left: " + calculator.getOperand("left"));
+      console.log("operator: " + calculator.getOperator());
+      console.log("right: " + calculator.getOperand("right"));
+
+      return;
     }
 
     // If there's no left and the input is minus,
@@ -120,8 +155,10 @@ export function initDoubleOperandOperation(
         if (result !== null && typeof result === "number") {
           new ProcessCalculationResultCommand(calculator, result).execute();
 
-          canAssignOperator &&
+          if (canAssignOperator) {
             new SetOperatorCommand(calculator, receivedOperator).execute();
+            new SetDecimalZerosCommand(calculator, 0).execute();
+          }
 
           calculator.CurrentCommand = Command;
 

@@ -17,6 +17,6 @@ export class ProcessCalculationResultCommand implements ICommand {
       new InterpretAsCommand(this.calculator, "left", "decimal").execute();
     }
 
-    new InterpretAsCommand(this.calculator, "right", "whole");
+    new InterpretAsCommand(this.calculator, "right", "whole").execute();
   }
 }
