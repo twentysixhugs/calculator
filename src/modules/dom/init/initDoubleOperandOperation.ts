@@ -76,7 +76,6 @@ export function initDoubleOperandOperation(
       if (
         expressionHasOperator &&
         !expressionHasRightOperand &&
-        !rightOperand &&
         receivedOperator === Operator.Subtract
       ) {
         new ShouldChangeNextOperatorSignCommand(calculator, true).execute();
@@ -90,6 +89,21 @@ export function initDoubleOperandOperation(
 
         return;
       }
+    }
+
+    if (
+      expressionHasOperator &&
+      !expressionHasRightOperand &&
+      isOperatorAssignable(receivedOperator)
+    ) {
+      new SetOperatorCommand(calculator, receivedOperator).execute();
+      updateDisplay();
+
+      console.log("left: " + calculator.getOperand("left"));
+      console.log("operator: " + calculator.getOperator());
+      console.log("right: " + calculator.getOperand("right"));
+
+      return;
     }
 
     // If there's no left and the input is minus,
