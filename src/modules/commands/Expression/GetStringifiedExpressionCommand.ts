@@ -9,7 +9,15 @@ export class GetStringifiedExpressionCommand implements ICommand {
 
   execute() {
     // Returns a stringified version of the current expression
-    const { left, operator, right } = this.calculator.getExpression();
+    const { left, operator, right: rawRight } = this.calculator.getExpression();
+
+    let right;
+
+    if (rawRight === 0 && Object.is(rawRight, -0)) {
+      right = "-0";
+    } else {
+      right = rawRight;
+    }
 
     const leftHasDecimal = new IsDecimalPointCommand(
       this.calculator,

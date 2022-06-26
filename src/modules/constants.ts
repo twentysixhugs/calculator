@@ -10,6 +10,7 @@ export enum Operator {
 export enum OperatorCharacters {
   Add = "\u002B",
   Subtract = "\u2212",
+  SubtractJSConverted = "-",
   Multiply = "\u00d7",
   Divide = "\u002F",
   Yroot = " yroot ",

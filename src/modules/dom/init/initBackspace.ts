@@ -7,6 +7,8 @@ import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand
 import { InterpretAsCommand } from "../../commands/Expression/InterpretAsCommand";
 import { IsDecimalPointCommand } from "../../commands/Expression/IsDecimalPointCommand";
 import { SetDecimalZerosCommand } from "../../commands/Expression/SetDecimalZerosCommand";
+import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
+import { OperatorCharacters } from "../../constants";
 import { appendDisplay, getDisplayValue, updateDisplay } from "../display";
 
 export function initBackspace() {
@@ -100,6 +102,10 @@ function initForOperand(operandPosition: "left" | "right") {
 
   new EraseOperandFromEndCommand(calculator, operandPosition).execute();
   updateDisplay();
+
+  if (new ShouldChangeNextOperatorSignCommand(calculator).execute()) {
+    appendDisplay(OperatorCharacters.Subtract);
+  }
   console.log("left: " + calculator.getOperand("left"));
   console.log("operator: " + calculator.getOperator());
   console.log("right: " + calculator.getOperand("right"));

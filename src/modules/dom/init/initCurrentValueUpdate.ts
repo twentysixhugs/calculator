@@ -1,10 +1,11 @@
 import { calculator } from "../../Calculator";
 import { GetOperatorCommand } from "../../commands/Expression/GetOperatorCommand";
 import { AppendOperandCommand } from "../../commands/Expression/AppendOperandCommand";
-import { updateDisplay } from "../display";
+import { appendDisplay, updateDisplay } from "../display";
 import { GetOperandCommand } from "../../commands/Expression/GetOperandCommand";
 import { initEquals } from "./initEquals";
 import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/ShouldChangeNextOperatorSignCommand";
+import { OperatorCharacters } from "../../constants";
 
 export function initCurrentValueUpdate() {
   // Appends current value when clicking on 0-9
@@ -52,6 +53,10 @@ export function initCurrentValueUpdate() {
         new AppendOperandCommand(calculator, number, "right").execute();
         initEquals();
         updateDisplay();
+
+        if (new ShouldChangeNextOperatorSignCommand(calculator).execute()) {
+          appendDisplay(OperatorCharacters.Subtract);
+        }
 
         console.log("left: " + calculator.getOperand("left"));
         console.log("operator: " + calculator.getOperator());
