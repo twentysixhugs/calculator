@@ -1,4 +1,6 @@
-.phone-container {
+.root {
+  --root-background: #f9c2d2;
+
   --highlight-background: #f7d6df;
   --main-background: #fff;
   --buttons-background: #fdfafa;
@@ -30,6 +32,8 @@
   --top-bar-element-color: #000;
 
   &.is-dark-theme {
+    --root-background: rgb(192 136 153);
+
     --main-background: rgb(45, 49, 58);
     --buttons-background: rgb(43, 47, 56);
     --design-button-background: rgb(45, 49, 58);
