@@ -22,7 +22,11 @@ export class EraseOperandFromEndCommand implements ICommand {
         operandAfterErase[operandAfterErase.length - 1] === "0" &&
         operandAfterErase.includes(".")
       ) {
-        this.calculator.setDecimalZeros(operandAfterErase.split(".")[1].length);
+        const decimalZerosAfterErase = (
+          operandAfterErase.split(".")[1].match(/0/g) || []
+        ).length;
+
+        this.calculator.setDecimalZeros(decimalZerosAfterErase);
       }
 
       if (operandAfterErase === "") {
