@@ -5,7 +5,7 @@ import { ProcessCalculationResultCommand } from "../../commands/Expression/Proce
 import { IsDecimalPointCommand } from "../../commands/Expression/IsDecimalPointCommand";
 import { updateDisplay } from "../display";
 import { isCalculationError } from "../helpers";
-import { showError } from "../display";
+import { showError, getDisplayValue } from "../display";
 
 export function initEquals() {
   const equalsButton = document.querySelector(
@@ -21,7 +21,13 @@ export function initEquals() {
       "right"
     ).execute();
 
-    if (rightHasDecimal && !right?.toString().includes(".")) {
+    const displayValue = getDisplayValue();
+
+    if (!displayValue) return;
+
+    const lastCharOnDisplay = displayValue[displayValue.length - 1];
+
+    if (rightHasDecimal && lastCharOnDisplay === ".") {
       return;
     }
 
