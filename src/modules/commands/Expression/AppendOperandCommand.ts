@@ -9,7 +9,7 @@ export class AppendOperandCommand implements ICommand {
   ) {}
 
   execute() {
-    const valueToAppend = this.arg.toString();
+    const valueToAppend = Object.is(this.arg, -0) ? "-0" : this.arg.toString();
 
     const operandAtPosition = this.calculator
       .getOperand(this.operandPosition)
@@ -61,8 +61,6 @@ export class AppendOperandCommand implements ICommand {
         );
       }
     }
-
-    // if it should not append decimal part
 
     function tryToInsertDecimalPoint() {
       return operandAtPosition?.includes(".") ? "" : ".";
