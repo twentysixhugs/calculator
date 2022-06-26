@@ -7,8 +7,6 @@ export class ProcessCalculationResultCommand implements ICommand {
   constructor(private calculator: ICalculator, private result: number) {}
 
   execute() {
-    console.log(this.result);
-
     let fixedResult = this.result.toFixed(5);
 
     if (

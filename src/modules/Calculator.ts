@@ -49,8 +49,6 @@ class Calculator implements ICalculator {
       ...this._decimalPointState,
       [position]: value,
     };
-
-    console.log(this._decimalPointState);
   }
 
   incrementDecimalZeros() {
@@ -155,12 +153,10 @@ class Calculator implements ICalculator {
 
   addToMemory(operand: number): void {
     this._memory += operand;
-    console.log("add");
   }
 
   subtractFromMemory(operand: number): void {
     this._memory -= operand;
-    console.log("subtract");
   }
 
   recallFromMemory() {

@@ -82,10 +82,6 @@ export function initDoubleOperandOperation(
 
         calculator.CurrentCommand = Command;
 
-        console.log("left: " + calculator.getOperand("left"));
-        console.log("operator: " + calculator.getOperator());
-        console.log("right: " + calculator.getOperand("right"));
-
         return;
       }
 
@@ -100,10 +96,6 @@ export function initDoubleOperandOperation(
 
         updateDisplay();
         appendDisplay(OperatorCharacters.Subtract);
-
-        console.log("left: " + calculator.getOperand("left"));
-        console.log("operator: " + calculator.getOperator());
-        console.log("right: " + calculator.getOperand("right"));
 
         return;
       }
@@ -120,10 +112,6 @@ export function initDoubleOperandOperation(
       new ShouldChangeNextOperatorSignCommand(calculator, false).execute();
 
       updateDisplay();
-
-      console.log("left: " + calculator.getOperand("left"));
-      console.log("operator: " + calculator.getOperator());
-      console.log("right: " + calculator.getOperand("right"));
 
       return;
     }
