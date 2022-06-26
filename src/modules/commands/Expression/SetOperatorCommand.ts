@@ -9,8 +9,6 @@ export class SetOperatorCommand implements ICommand {
   ) {}
 
   execute() {
-    this.calculator.resetDecimalZeros();
-
     return this.calculator.setOperator(this.operator);
   }
 }
