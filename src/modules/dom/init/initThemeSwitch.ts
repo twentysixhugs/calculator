@@ -1,15 +1,21 @@
 export function initThemeSwitch() {
-  const btn = document.querySelector(".js-theme") as HTMLButtonElement;
+  const switchBtn = document.querySelector(".js-theme") as HTMLButtonElement;
 
-  btn.addEventListener("click", (e) => {
-    const phoneContainer = document.querySelector(
-      ".js-phone-container"
-    ) as HTMLDivElement;
+  const rootEl = document.querySelector(".root") as HTMLDivElement;
 
-    if (phoneContainer.classList.contains("is-dark-theme")) {
-      phoneContainer.classList.remove("is-dark-theme");
+  const themeFromLocalStorage = localStorage.getItem("theme");
+
+  if (themeFromLocalStorage === "dark") {
+    rootEl.classList.add("is-dark-theme");
+  }
+
+  switchBtn.addEventListener("click", (e) => {
+    if (rootEl.classList.contains("is-dark-theme")) {
+      rootEl.classList.remove("is-dark-theme");
+      localStorage.setItem("theme", "light");
     } else {
-      phoneContainer.classList.add("is-dark-theme");
+      rootEl.classList.add("is-dark-theme");
+      localStorage.setItem("theme", "dark");
     }
   });
 }
