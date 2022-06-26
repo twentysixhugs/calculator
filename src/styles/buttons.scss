@@ -1,0 +1,186 @@
+.wrapper--buttons {
+  display: flex;
+  flex-flow: column;
+  gap: 1rem;
+
+  padding: var(--padding);
+
+  background: var(--buttons-background);
+  border-radius: 32px 32px 14px 14px;
+
+  @media (max-device-width: 1000px) and (orientation: landscape) {
+    flex-flow: row;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+
+  @media (max-device-height: 350px) and (orientation: landscape) {
+    padding: 0;
+    background: none;
+  }
+}
+
+.buttons {
+  @mixin buttons-flex-centered($flex-flow, $gap, $buttonSize) {
+    display: flex;
+    flex-flow: $flex-flow;
+    justify-content: center;
+    gap: $gap;
+
+    .btn {
+      width: $buttonSize;
+      height: $buttonSize;
+    }
+  }
+
+  @mixin outer-wrapper($gap, $flex-flow: row) {
+    & > .wrapper {
+      display: flex;
+      flex-flow: $flex-flow;
+      gap: $gap;
+    }
+  }
+
+  @mixin inner-wrapper($gap, $flex-flow: row, $justify-content: center) {
+    & > .wrapper > .wrapper {
+      display: flex;
+      gap: $gap;
+      flex-flow: $flex-flow;
+      justify-content: $justify-content;
+      align-items: center;
+    }
+  }
+
+  &--top {
+    /* By passing rems, we make sure it will grow
+    if the user changes browser font size */
+    $gap: 0.75rem;
+
+    @include buttons-flex-centered(column, $gap, 2rem);
+    @include outer-wrapper($gap);
+
+    @media (max-device-width: 1000px) and (orientation: landscape) {
+      @include buttons-flex-centered(row, 4rem, 2rem);
+      @include outer-wrapper($gap, column-reverse);
+      align-items: flex-start;
+    }
+
+    @media (max-width: 350px) {
+      @include outer-wrapper(0.5rem);
+    }
+  }
+
+  &--middle {
+    $gap: 1.75rem;
+    $landscape-column-gap: 2.9rem;
+
+    position: relative;
+
+    @include buttons-flex-centered(column, $gap, var(--middle-gap));
+    @include outer-wrapper($gap, column);
+    @include inner-wrapper($gap);
+
+    @media (min-width: 1000px) {
+      & .line {
+        align-self: center;
+
+        width: 110px;
+        height: 3px;
+
+        border-radius: 2px;
+        background: var(--line-background);
+      }
+    }
+
+    @media (max-width: 600px) {
+      $gap: 1.2rem;
+      @include buttons-flex-centered(column, $gap, var(--middle-gap));
+      @include outer-wrapper($gap, column);
+      @include inner-wrapper($gap, row, space-between);
+    }
+
+    @media (max-width: 350px) {
+      $gap: 0.5rem;
+      @include outer-wrapper($gap, column);
+      @include inner-wrapper($gap, row, space-between);
+    }
+
+    @media (max-device-width: 1000px) and (orientation: landscape) {
+      flex-flow: row-reverse;
+      $gap: 1.2rem;
+
+      @include outer-wrapper($landscape-column-gap, column);
+      @include inner-wrapper($gap, row, space-between);
+
+      & .wrapper--powers {
+        flex-flow: column !important;
+        gap: $landscape-column-gap !important;
+      }
+
+      .btn {
+        position: relative;
+
+        &--equals {
+          left: calc(var(--middle-gap) + $gap);
+        }
+
+        &--divide {
+          right: calc(var(--middle-gap) + $gap);
+        }
+      }
+    }
+  }
+
+  .btn {
+    background: none;
+    border-radius: 50%;
+
+    color: var(--non-highlight-button-text);
+
+    &:active {
+      background: var(--non-highlight-button-active);
+    }
+
+    &--highlight {
+      background: var(--highlight-background);
+      color: var(--highlight-button-text);
+      box-shadow: var(--highlight-button-shadow);
+
+      &:active {
+        background: #f5c3d0;
+      }
+    }
+
+    &--equals {
+      background: rgb(91, 132, 176);
+      color: #fff;
+      border-radius: 50%;
+      box-shadow: var(--equals-button-shadow);
+
+      &:active {
+        background: rgb(59, 116, 177);
+      }
+    }
+
+    &--icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: var(--icon-button);
+      height: var(--icon-button);
+
+      color: var(--text-color);
+
+      & path {
+        margin: 0;
+      }
+    }
+  }
+}

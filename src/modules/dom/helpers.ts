@@ -22,6 +22,7 @@ type CalculationErrorType = Error & {
 };
 
 export function isCalculationError(arg: unknown): arg is CalculationErrorType {
+  console.log(Object.values(CalculationError));
   if (
     arg &&
     typeof arg === "object" &&

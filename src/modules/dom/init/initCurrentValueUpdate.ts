@@ -13,6 +13,12 @@ export function initCurrentValueUpdate() {
 
   document.querySelectorAll<HTMLButtonElement>(".js-number").forEach((el) => {
     el.addEventListener("click", (e) => {
+      const left = new GetOperandCommand(calculator, "left").execute();
+      const right = new GetOperandCommand(calculator, "right").execute();
+
+      const leftLength = left !== null && left.toString().length;
+      const rightLength = right !== null && right.toString().length;
+
       const target = e.target as HTMLButtonElement;
 
       let number;
@@ -26,12 +32,16 @@ export function initCurrentValueUpdate() {
 
       // If the expression doesn't have an operator,
       // append the left operand on every input
+      // Make sure it's not bigger than 8 characters
 
       const expressionHasOperator = new GetOperatorCommand(
         calculator
       ).execute();
 
-      if (!expressionHasOperator) {
+      const leftIsNotBiggerThanPossible =
+        (leftLength && leftLength < 8) || left === null;
+
+      if (!expressionHasOperator && leftIsNotBiggerThanPossible) {
         new AppendOperandCommand(calculator, number, "left").execute();
 
         updateDisplay();
@@ -44,12 +54,21 @@ export function initCurrentValueUpdate() {
       }
 
       // If the expression has the left operand and an operator,
-      // append the left operand on every input
+      // append the right operand on every input
+      // Make sure the whole expression is not bigger than 12 characters
 
       const expressionHasLeftOperand =
         new GetOperandCommand(calculator, "left").execute() !== null;
 
-      if (expressionHasLeftOperand && expressionHasOperator) {
+      const expressionIsNotBiggerThanPossible =
+        (leftLength && rightLength && rightLength < leftLength - 5) ||
+        right === null;
+
+      if (
+        expressionHasLeftOperand &&
+        expressionHasOperator &&
+        expressionIsNotBiggerThanPossible
+      ) {
         new AppendOperandCommand(calculator, number, "right").execute();
         initEquals();
         updateDisplay();

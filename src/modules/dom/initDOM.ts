@@ -4,6 +4,7 @@ import { initMemoryOperations } from "./init/Memory/initMemoryOperations";
 import { initBackspace } from "./init/initBackspace";
 import { initDecimalPoint } from "./init/initDecimalPoint";
 import { initHistory } from "./init/initHistory";
+import { initThemeSwitch } from "./init/initThemeSwitch";
 
 export function initDOM() {
   initCurrentValueUpdate();
@@ -12,4 +13,5 @@ export function initDOM() {
   initBackspace();
   initDecimalPoint();
   initHistory();
+  initThemeSwitch();
 }
