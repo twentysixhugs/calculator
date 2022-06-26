@@ -97,6 +97,8 @@ export function initDoubleOperandOperation(
       isOperatorAssignable(receivedOperator)
     ) {
       new SetOperatorCommand(calculator, receivedOperator).execute();
+      calculator.CurrentCommand = Command;
+      new ShouldChangeNextOperatorSignCommand(calculator, false).execute();
       updateDisplay();
 
       console.log("left: " + calculator.getOperand("left"));
