@@ -5,8 +5,10 @@
   "main": "bundle.js",
   "scripts": {
     "test": "jest",
+    "lint": "eslint src --ext .ts",
     "start": "webpack serve --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,7 @@
     "css-loader": "^6.7.1",
     "eslint": "^8.17.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "jest": "^28.1.1",
     "prettier": "^2.7.1",
     "sass": "^1.52.3",
