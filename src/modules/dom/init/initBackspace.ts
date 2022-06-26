@@ -71,10 +71,6 @@ function initForOperand(operandPosition: "left" | "right") {
     new InterpretAsCommand(calculator, operandPosition, "whole").execute();
     updateDisplay();
 
-    console.log("left: " + calculator.getOperand("left"));
-    console.log("operator: " + calculator.getOperator());
-    console.log("right: " + calculator.getOperand("right"));
-
     return;
   }
 
@@ -92,10 +88,6 @@ function initForOperand(operandPosition: "left" | "right") {
 
     updateDisplay();
 
-    console.log("left: " + calculator.getOperand("left"));
-    console.log("operator: " + calculator.getOperator());
-    console.log("right: " + calculator.getOperand("right"));
-
     return;
   }
 
@@ -105,7 +97,4 @@ function initForOperand(operandPosition: "left" | "right") {
   if (new ShouldChangeNextOperatorSignCommand(calculator).execute()) {
     appendDisplay(OperatorCharacters.Subtract);
   }
-  console.log("left: " + calculator.getOperand("left"));
-  console.log("operator: " + calculator.getOperator());
-  console.log("right: " + calculator.getOperand("right"));
 }

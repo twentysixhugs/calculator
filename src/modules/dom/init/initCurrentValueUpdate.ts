@@ -46,10 +46,6 @@ export function initCurrentValueUpdate() {
 
         updateDisplay();
 
-        console.log("left: " + calculator.getOperand("left"));
-        console.log("operator: " + calculator.getOperator());
-        console.log("right: " + calculator.getOperand("right"));
-
         return;
       }
 
@@ -76,10 +72,6 @@ export function initCurrentValueUpdate() {
         if (new ShouldChangeNextOperatorSignCommand(calculator).execute()) {
           appendDisplay(OperatorCharacters.Subtract);
         }
-
-        console.log("left: " + calculator.getOperand("left"));
-        console.log("operator: " + calculator.getOperator());
-        console.log("right: " + calculator.getOperand("right"));
 
         return;
       }
