@@ -13,5 +13,6 @@ module.exports = {
   plugins: ["@typescript-eslint"],
   rules: {
     "prefer-const": 1,
+    "@typescript-eslint/no-unused-vars": 0,
   },
 };
