@@ -18,6 +18,7 @@ import { ShouldChangeNextOperatorSignCommand } from "../../commands/Expression/S
 import { getDisplayValue } from "../display";
 import { SetDecimalZerosCommand } from "../../commands/Expression/SetDecimalZerosCommand";
 import { InterpretAsCommand } from "../../commands/Expression/InterpretAsCommand";
+import { PushExpressionToHistoryStackCommand } from "../../commands/Expression/PushExpressionToHistoryStackCommand";
 
 export function initDoubleOperandOperation(
   selector: DoubleOperandOperations,
@@ -150,6 +151,8 @@ export function initDoubleOperandOperation(
       CurrentCommand
     ) {
       try {
+        new PushExpressionToHistoryStackCommand(calculator).execute();
+
         const result = new CurrentCommand(calculator).execute();
 
         if (result !== null && typeof result === "number") {

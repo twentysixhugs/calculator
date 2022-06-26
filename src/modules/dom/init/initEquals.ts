@@ -6,6 +6,7 @@ import { IsDecimalPointCommand } from "../../commands/Expression/IsDecimalPointC
 import { updateDisplay } from "../display";
 import { isCalculationError } from "../helpers";
 import { showError, getDisplayValue } from "../display";
+import { PushExpressionToHistoryStackCommand } from "../../commands/Expression/PushExpressionToHistoryStackCommand";
 
 export function initEquals() {
   const equalsButton = document.querySelector(
@@ -49,10 +50,14 @@ export function initEquals() {
         const result = new CurrentCommand(calculator).execute();
 
         if (result !== null && typeof result === "number") {
+          new PushExpressionToHistoryStackCommand(calculator).execute();
+
           new ProcessCalculationResultCommand(calculator, result).execute();
           updateDisplay();
         }
       } catch (err) {
+        new PushExpressionToHistoryStackCommand(calculator).execute();
+
         new ProcessCalculationResultCommand(calculator, 0).execute();
         updateDisplay();
 

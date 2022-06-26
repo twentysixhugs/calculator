@@ -62,4 +62,8 @@ export interface ICalculator {
   recallFromMemory(): number;
 
   clearMemory(): void;
+
+  getPreviousExpression(): IExpression | undefined;
+
+  pushExpressionToHistoryStack(): void;
 }
