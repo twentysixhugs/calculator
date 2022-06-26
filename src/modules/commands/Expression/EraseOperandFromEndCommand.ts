@@ -14,7 +14,15 @@ export class EraseOperandFromEndCommand implements ICommand {
 
     if (operandAtPosition) {
       // Remove the last character from stringified operand
+
       const operandAfterErase = operandAtPosition.slice(0, -1);
+
+      if (
+        operandAfterErase[operandAfterErase.length - 1] === "0" &&
+        operandAfterErase.includes(".")
+      ) {
+        this.calculator.setDecimalZeros(operandAfterErase.split(".")[1].length);
+      }
 
       if (operandAfterErase === "") {
         const valueToSet = this.operandPosition === "left" ? 0 : null;

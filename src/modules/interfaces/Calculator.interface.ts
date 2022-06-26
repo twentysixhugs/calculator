@@ -35,6 +35,8 @@ export interface ICalculator {
 
   resetDecimalZeros(): void;
 
+  setDecimalZeros(value: number): void;
+
   add(a: number, b: number): number;
 
   subtract(a: number, b: number): number;

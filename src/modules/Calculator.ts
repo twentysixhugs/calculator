@@ -69,6 +69,10 @@ class Calculator implements ICalculator {
     this._decimalZerosCount = 0;
   }
 
+  setDecimalZeros(value: number): void {
+    this._decimalZerosCount = value;
+  }
+
   private _memory = 0;
 
   constructor(private _expression: IExpression) {}

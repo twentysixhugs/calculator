@@ -21,6 +21,11 @@ export function appendDisplay(value: string) {
     inputOutput.textContent += value;
   }
 }
+
+export function getDisplayValue() {
+  return inputOutput.textContent;
+}
+
 export function showError(error: CalculationError) {
   errors.textContent = error;
   errors.classList.add("is-visible");
