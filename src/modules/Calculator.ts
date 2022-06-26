@@ -10,6 +10,8 @@ import { IExpression } from "./interfaces/Expression.interface";
 import { Expression } from "./Expression";
 
 import { CommandConstructor } from "./interfaces/Command.interface";
+import { HistoryStack } from "./HistoryStack";
+import { IHistoryStack } from "./interfaces/HistoryStack.interface";
 
 class Calculator implements ICalculator {
   private _shouldChangeNextOperatorSign = false;
@@ -75,7 +77,10 @@ class Calculator implements ICalculator {
 
   private _memory = 0;
 
-  constructor(private _expression: IExpression) {}
+  constructor(
+    private _expression: IExpression,
+    private _historyStack: IHistoryStack<IExpression>
+  ) {}
 
   getOperand(operandPosition: "left" | "right") {
     return this._expression[operandPosition];
@@ -165,6 +170,17 @@ class Calculator implements ICalculator {
   clearMemory(): void {
     this._memory = 0;
   }
+
+  getPreviousExpression(): IExpression | undefined {
+    return this._historyStack.pop();
+  }
+
+  pushExpressionToHistoryStack() {
+    this._historyStack.push({ ...this._expression });
+  }
 }
 
-export const calculator = new Calculator(new Expression());
+export const calculator = new Calculator(
+  new Expression(),
+  new HistoryStack<IExpression>(10)
+);

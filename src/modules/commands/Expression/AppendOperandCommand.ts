@@ -11,9 +11,11 @@ export class AppendOperandCommand implements ICommand {
   execute() {
     const valueToAppend = Object.is(this.arg, -0) ? "-0" : this.arg.toString();
 
-    const operandAtPosition = this.calculator
-      .getOperand(this.operandPosition)
-      ?.toString();
+    const operandAtPositionNumber = this.calculator.getOperand(
+      this.operandPosition
+    );
+
+    const operandAtPosition = operandAtPositionNumber?.toString();
 
     const decimalZerosCount = this.calculator.getDecimalZeros();
 
@@ -43,15 +45,32 @@ export class AppendOperandCommand implements ICommand {
         } else {
           const zeros = new Array(decimalZerosCount).fill("0").join("");
 
-          this.calculator.setOperand(
-            this.operandPosition,
-            parseFloat(
-              operandAtPosition +
-                tryToInsertDecimalPoint() +
-                zeros +
-                valueToAppend
-            )
-          );
+          if (
+            operandAtPositionNumber === 0 &&
+            Object.is(operandAtPositionNumber, -0)
+          ) {
+            this.calculator.setOperand(
+              this.operandPosition,
+              parseFloat(
+                "-" +
+                  operandAtPosition +
+                  tryToInsertDecimalPoint() +
+                  zeros +
+                  valueToAppend
+              )
+            );
+          } else {
+            this.calculator.setOperand(
+              this.operandPosition,
+              parseFloat(
+                operandAtPosition +
+                  tryToInsertDecimalPoint() +
+                  zeros +
+                  valueToAppend
+              )
+            );
+          }
+
           this.calculator.resetDecimalZeros();
         }
       } else {

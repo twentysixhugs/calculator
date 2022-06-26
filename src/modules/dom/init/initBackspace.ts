@@ -82,7 +82,6 @@ function initForOperand(operandPosition: "left" | "right") {
 
   if (operandHasDecimal && displayValue.includes(".") && decimalZeros) {
     new SetDecimalZerosCommand(calculator, decimalZeros - 1).execute();
-    // new EraseOperandFromEndCommand(calculator, operandPosition).execute();
     updateDisplay();
     return;
   }

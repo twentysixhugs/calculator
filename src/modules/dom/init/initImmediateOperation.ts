@@ -9,6 +9,7 @@ import { showError, updateDisplay } from "../display";
 import { calculator } from "../../Calculator";
 import { isCalculationError } from "../helpers";
 import { ProcessCalculationResultCommand } from "../../commands/Expression/ProcessCalculationResultCommand";
+import { PushExpressionToHistoryStackCommand } from "../../commands/Expression/PushExpressionToHistoryStackCommand";
 
 export function initImmediateOperation(
   selector: ImmediateOperations,
@@ -69,7 +70,10 @@ export function initImmediateOperation(
       try {
         const result = new CurrentCommand(calculator).execute();
         if (result !== null && typeof result === "number") {
+          new PushExpressionToHistoryStackCommand(calculator).execute();
+
           new ProcessCalculationResultCommand(calculator, result).execute();
+
           new ImmediateCommand(calculator, "left").execute();
         }
       } catch (err) {
