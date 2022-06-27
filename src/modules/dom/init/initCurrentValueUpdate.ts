@@ -57,10 +57,8 @@ export function initCurrentValueUpdate() {
         new GetOperandCommand(calculator, "left").execute() !== null;
 
       const expressionIsNotBiggerThanPossible =
-        (leftLength &&
-          leftLength <= 8 &&
-          rightLength < 8 &&
-          (rightLength < leftLength - 5 || leftLength - 5 <= 0)) ||
+        (leftLength && leftLength === 8 && rightLength < 3) ||
+        (leftLength && leftLength < 8 && rightLength < 12 - leftLength) ||
         right === null;
 
       if (

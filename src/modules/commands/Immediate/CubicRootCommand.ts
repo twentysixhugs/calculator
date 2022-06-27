@@ -1,5 +1,6 @@
 import { ICommand } from "../../interfaces/Command.interface";
 import { ICalculator } from "../../interfaces/Calculator.interface";
+import { CalculationError } from "../../constants";
 
 export class CubicRootCommand implements ICommand {
   constructor(
@@ -9,7 +10,12 @@ export class CubicRootCommand implements ICommand {
 
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
+
     if (operand === null) return false;
+
+    if (operand < 0) {
+      throw new Error(CalculationError.RootOfNegativeNumber);
+    }
 
     const result = this.calculator.root(operand, 3);
     this.calculator.setOperand(

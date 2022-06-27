@@ -7,13 +7,14 @@ export class ProcessCalculationResultCommand implements ICommand {
   constructor(private calculator: ICalculator, private result: number) {}
 
   execute() {
-    let fixedResult = this.result.toFixed(5);
+    let fixedResult = +this.result.toFixed(5);
 
     if (
       fixedResult.toString().includes(".") &&
       fixedResult.toString().replace(".", "").length > 8
     ) {
-      fixedResult = this.result.toFixed(1);
+      fixedResult = +this.result.toFixed(1);
+      new InterpretAsCommand(this.calculator, "left", "whole").execute();
     }
 
     if (
@@ -25,11 +26,11 @@ export class ProcessCalculationResultCommand implements ICommand {
       throw new Error(CalculationError.OutOfRange);
     }
 
-    this.calculator.setOperand("left", parseFloat(fixedResult));
+    this.calculator.setOperand("left", fixedResult);
     this.calculator.setOperator(null);
     this.calculator.setOperand("right", null);
 
-    if (!this.result.toString().includes(".")) {
+    if (!fixedResult.toString().includes(".")) {
       // if result is a whole number
       new InterpretAsCommand(this.calculator, "left", "whole").execute();
     } else {
