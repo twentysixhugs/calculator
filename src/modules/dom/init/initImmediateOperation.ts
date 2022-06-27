@@ -39,6 +39,8 @@ export function initImmediateOperation(
 
       // expression: "2", command is applied to "2"
       try {
+        new PushExpressionToHistoryStackCommand(calculator).execute();
+
         const immediateCommandResult = new ImmediateCommand(
           calculator,
           "left"
@@ -78,10 +80,11 @@ export function initImmediateOperation(
       }
 
       try {
-        const result = new CurrentCommand(calculator).execute();
-        if (result !== null && typeof result === "number") {
-          new PushExpressionToHistoryStackCommand(calculator).execute();
+        new PushExpressionToHistoryStackCommand(calculator).execute();
 
+        const result = new CurrentCommand(calculator).execute();
+
+        if (result !== null && typeof result === "number") {
           new ProcessCalculationResultCommand(calculator, result).execute();
 
           const immediateCommandResult = new ImmediateCommand(
