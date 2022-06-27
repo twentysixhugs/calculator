@@ -10,6 +10,15 @@
 4. Switch to `dev` branch if you plan to perform modifications 
 5. Run `npm start`. You'll see a new tab in the browser with the app running.
 
+### Additional scripts
+- Test: `npm test`
+- Linter (Simply checks the code for linting errors, doesn't fix anything): `npm run lint`
+
+### How to create git hooks
+- Run `npm run prepare`
+- Add a hook `npx husky add .husky/pre-commit "npm test"` (Will run `npm test` before making a commit)
+- For more information, visit [husky npm page](https://www.npmjs.com/package/husky)
+
 ### Folder structure/Project information
 - The project heavily utilizes the Command pattern for working with Calculator API. It helps abstract away operations logic. It decouples API from consumer modules, which allows to easily perform API modifications without having to rewrite consumer implementation. For instance, if you want to alter the `calculator.getOperand()` method, you'll need to change the implementation of `GetOperandCommand.ts`, but not the modules that actually call this method (I.e. the ones that render the expression to the DOM and need to know what the operand is). Apart from that, it allows you to chain several API calls which may be painful to change from the consumer.
 - There's only one Calculator instance shared across the app, it should be used for performing all commands. It is exported from `Calculator.ts`.
