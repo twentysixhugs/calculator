@@ -50,4 +50,5 @@ export enum CalculationError {
   DivisionByZero = "Error: Division by zero",
   OutOfRange = "Error: Expression is out of range",
   RootOfNegativeNumber = "Error: Root of negative number",
+  FactorialOfNumberWithDecimal = "Error: Factorial of a number with decimal part",
 }
