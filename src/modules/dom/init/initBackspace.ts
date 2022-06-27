@@ -34,14 +34,12 @@ export function initBackspace() {
     if (expressionHasLeft && !operator) {
       // If working with left operand
       initForOperand("left");
-      updateDisplay();
       return;
     }
 
     if (expressionHasLeft && operator) {
       // If working with operator
       new EraseOperatorCommand(calculator).execute();
-      updateDisplay();
       return;
     }
   });
