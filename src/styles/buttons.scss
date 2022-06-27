@@ -147,7 +147,7 @@
       box-shadow: var(--highlight-button-shadow);
 
       &:active {
-        background: #f5c3d0;
+        background: var(--highlight-button-active);
       }
     }
 
