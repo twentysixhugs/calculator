@@ -13,6 +13,6 @@ export class InvertSignCommand implements ICommand {
     if (operand === null) return false;
 
     this.calculator.setOperand(this.operandPosition, -operand);
-    return true;
+    return -operand;
   }
 }

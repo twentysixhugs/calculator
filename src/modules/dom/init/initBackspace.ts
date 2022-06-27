@@ -34,7 +34,6 @@ export function initBackspace() {
     if (expressionHasLeft && !operator) {
       // If working with left operand
       initForOperand("left");
-      updateDisplay();
       return;
     }
 

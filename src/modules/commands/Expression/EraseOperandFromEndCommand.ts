@@ -33,12 +33,14 @@ export class EraseOperandFromEndCommand implements ICommand {
         const valueToSet = this.operandPosition === "left" ? 0 : null;
 
         this.calculator.setOperand(this.operandPosition, valueToSet);
-      } else if (
-        operandAfterErase === OperatorCharacters.SubtractJSConverted &&
-        this.operandPosition === "right"
-      ) {
+      } else if (operandAfterErase === OperatorCharacters.SubtractJSConverted) {
         this.calculator.shouldChangeNextOperatorSign = true;
-        this.calculator.setOperand(this.operandPosition, null);
+        if (this.operandPosition === "left") {
+          this.calculator.setOperand(this.operandPosition, 0);
+        }
+        if (this.operandPosition === "right") {
+          this.calculator.setOperand(this.operandPosition, null);
+        }
       } else {
         this.calculator.setOperand(this.operandPosition, +operandAfterErase);
       }

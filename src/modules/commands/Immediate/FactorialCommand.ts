@@ -9,7 +9,7 @@ export class FactorialCommand implements ICommand {
 
   execute() {
     const operand = this.calculator.getOperand(this.operandPosition);
-    if (operand === null) return false;
+    if (operand === null || !Number.isInteger(operand)) return false;
 
     const result = this.calculator.factorial(operand);
     this.calculator.setOperand(
@@ -17,6 +17,6 @@ export class FactorialCommand implements ICommand {
       parseFloat(result.toFixed(5))
     );
 
-    return true;
+    return result;
   }
 }

@@ -12,6 +12,15 @@ import { Expression } from "./Expression";
 import { CommandConstructor } from "./interfaces/Command.interface";
 import { HistoryStack } from "./HistoryStack";
 import { IHistoryStack } from "./interfaces/HistoryStack.interface";
+import { add } from "./math/add";
+import { subtract } from "./math/subtract";
+import { multiply } from "./math/multiply";
+import { divide } from "./math/divide";
+import { reciprocal } from "./math/reciprocal";
+import { percentage } from "./math/percentage";
+import { power } from "./math/power";
+import { factorial } from "./math/factorial";
+import { root } from "./math/root";
 
 class Calculator implements ICalculator {
   private _shouldChangeNextOperatorSign = false;
@@ -116,39 +125,39 @@ class Calculator implements ICalculator {
   }
 
   add(a: number, b: number) {
-    return a + b;
+    return add(a, b);
   }
 
   subtract(a: number, b: number) {
-    return a - b;
+    return subtract(a, b);
   }
 
   multiply(a: number, b: number) {
-    return a * b;
+    return multiply(a, b);
   }
 
   divide(a: number, b: number) {
-    return a / b;
+    return divide(a, b);
   }
 
   reciprocal(operand: number) {
-    return 1 / operand;
+    return reciprocal(operand);
   }
 
   percentage(operand: number) {
-    return operand / 100;
+    return percentage(operand);
   }
 
   root(operand: number, ofPower: number) {
-    return 1;
+    return root(operand, ofPower);
   }
 
   power(operand: number, exponent: number) {
-    return 1;
+    return power(operand, exponent);
   }
 
   factorial(operand: number) {
-    return 1;
+    return factorial(operand);
   }
 
   addToMemory(operand: number): void {
