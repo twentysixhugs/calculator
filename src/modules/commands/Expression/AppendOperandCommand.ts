@@ -74,10 +74,17 @@ export class AppendOperandCommand implements ICommand {
           this.calculator.resetDecimalZeros();
         }
       } else {
-        this.calculator.setOperand(
-          this.operandPosition,
-          parseFloat(operandAtPosition + valueToAppend)
-        );
+        if (operandAtPosition === "0") {
+          this.calculator.setOperand(
+            this.operandPosition,
+            parseFloat(valueToAppend)
+          );
+        } else {
+          this.calculator.setOperand(
+            this.operandPosition,
+            parseFloat(operandAtPosition + valueToAppend)
+          );
+        }
       }
     }
 
