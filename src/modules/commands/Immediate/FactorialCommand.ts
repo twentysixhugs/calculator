@@ -17,6 +17,6 @@ export class FactorialCommand implements ICommand {
       parseFloat(result.toFixed(5))
     );
 
-    return true;
+    return result;
   }
 }

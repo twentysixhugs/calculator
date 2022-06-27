@@ -39,7 +39,17 @@ export function initImmediateOperation(
 
       // expression: "2", command is applied to "2"
       try {
-        new ImmediateCommand(calculator, "left").execute();
+        const immediateCommandResult = new ImmediateCommand(
+          calculator,
+          "left"
+        ).execute();
+
+        if (typeof immediateCommandResult === "number") {
+          new ProcessCalculationResultCommand(
+            calculator,
+            immediateCommandResult
+          ).execute();
+        }
       } catch (err) {
         if (isCalculationError(err)) {
           showError(err.message);
@@ -74,7 +84,17 @@ export function initImmediateOperation(
 
           new ProcessCalculationResultCommand(calculator, result).execute();
 
-          new ImmediateCommand(calculator, "left").execute();
+          const immediateCommandResult = new ImmediateCommand(
+            calculator,
+            "left"
+          ).execute();
+
+          if (typeof immediateCommandResult === "number") {
+            new ProcessCalculationResultCommand(
+              calculator,
+              immediateCommandResult
+            ).execute();
+          }
         }
       } catch (err) {
         if (isCalculationError(err)) {
